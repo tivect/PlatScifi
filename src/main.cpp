@@ -13,6 +13,10 @@ int main() {
         }
 
         window.clear();
+
+        // Debug: create a red cube and render it
+        
+
         window.display();
     }
 }
