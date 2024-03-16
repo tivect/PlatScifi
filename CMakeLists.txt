@@ -16,6 +16,8 @@ add_executable(PlatScifi
     src/renderdata.h
     src/worldobject.cpp
     src/worldobject.h
+    src/renderer.cpp
+    src/renderer.h
 )
 target_link_libraries(PlatScifi PRIVATE sfml-graphics)
 target_compile_features(PlatScifi PRIVATE cxx_std_17)

@@ -10,7 +10,6 @@ public:
         locx += 0.1;
     }
 
-    // TODO: MAKE SURE IT OVERRIDES
     // Override rendering
     RenderData getRenderData() {
         return {
