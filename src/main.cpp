@@ -6,6 +6,8 @@ int main() {
     auto window = sf::RenderWindow{ { 1920u, 1080u }, "PlatScifi" };
     window.setFramerateLimit(144);
 
+    unsigned long frameNumber = 0;
+
     while (window.isOpen()) {
         // Handle events
         for (auto event = sf::Event{}; window.pollEvent(event);) {
@@ -14,12 +16,10 @@ int main() {
             }
         }
 
-        // Render
-        window.clear(sf::Color(0, 20, 30));
+        // Render using the demo
+        renderdemo(window, frameNumber);
 
-        // Use the demo
-        renderdemo(window);
-        
-        window.display();
+        // Increase the frame count
+        frameNumber++;
     }
 }
