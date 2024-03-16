@@ -10,7 +10,26 @@ FetchContent_Declare(SFML
     GIT_TAG 2.6.x)
 FetchContent_MakeAvailable(SFML)
 
-add_executable(PlatScifi src/main.cpp)
+#target_include_directories(PlatScifi PRIVATE $)
+
+#set(TARGET_H
+#    renderdemo.h
+#)
+
+#set(TARGET_SRC
+#    renderdemo.cpp
+#)
+
+#file(GLOB_RECURSE SOURCES
+#    header-folder/*.h
+#    source-folder/*.cpp
+#)
+
+add_executable(PlatScifi
+    src/main.cpp
+    src/renderdemo.h
+    src/renderdemo.cpp
+)
 target_link_libraries(PlatScifi PRIVATE sfml-graphics)
 target_compile_features(PlatScifi PRIVATE cxx_std_17)
 
