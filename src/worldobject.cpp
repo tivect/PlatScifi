@@ -4,7 +4,7 @@ void WorldObject::update() {
     // Update
 }
 
-RenderData WorldObject::render() {
+RenderData WorldObject::getRenderData() {
     return {
         RenderType::Rectangle,
         coordType,

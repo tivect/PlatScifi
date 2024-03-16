@@ -1,10 +1,18 @@
+#pragma once
+
 #include "worldobject.h"
 
 // Stores a red cube
 class RedCube : WorldObject {
 public:
+    // Override update: move right over time
+    void update() {
+        locx += 0.1;
+    }
+
+    // TODO: MAKE SURE IT OVERRIDES
     // Override rendering
-    RenderData render() {
+    RenderData getRenderData() {
         return {
             RenderType::Rectangle,
             coordType,
@@ -12,7 +20,7 @@ public:
             locy,
             width,
             height,
-            { 255, 255, 255 },
+            { 255, 0, 0 },
             ""
         };
     }
