@@ -6,6 +6,7 @@
 #include "worldstate.h"
 #include "worldobject.h"
 #include "worldobjects/redcube.h" // Debugging
+#include "worldobjects/bluecube.h"
 
 // SFML Demo
 int main() {
@@ -19,6 +20,7 @@ int main() {
     WorldState worldState;
     // Debug: create a red cube
     worldState.spawnObject(new RedCube(0, 0));
+    worldState.spawnObject(new BlueCube());
 
     while (window.isOpen()) {
         for (auto event = sf::Event{}; window.pollEvent(event);) {

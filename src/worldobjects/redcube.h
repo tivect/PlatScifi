@@ -11,7 +11,6 @@ public:
         locy = spawny;
     }
 
-    // TODO: ENSURE OVERRIDING WORKS
     // Override update: move right over time
     void update() {
         locx += 0.1;

@@ -12,7 +12,6 @@ FetchContent_MakeAvailable(SFML)
 
 add_executable(PlatScifi
     src/main.cpp
-    src/worldobjects/redcube.h
     src/renderdata.h
     src/worldobject.cpp
     src/worldobject.h
@@ -20,6 +19,8 @@ add_executable(PlatScifi
     src/renderer.h
     src/worldstate.cpp
     src/worldstate.h
+    src/worldobjects/redcube.h
+    src/worldobjects/bluecube.h
 )
 target_link_libraries(PlatScifi PRIVATE sfml-graphics)
 target_compile_features(PlatScifi PRIVATE cxx_std_17)
