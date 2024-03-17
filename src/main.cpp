@@ -1,7 +1,10 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <vector>
 #include "renderer.h"
 #include "renderdata.h"
+#include "worldstate.h"
+#include "worldobject.h"
 #include "worldobjects/redcube.h" // Debugging
 
 // SFML Demo
@@ -9,10 +12,13 @@ int main() {
     auto window = sf::RenderWindow{ { 1920u, 1080u }, "PlatScifi" };
     window.setFramerateLimit(144);
 
+    // TODO: build not working on Linux?
+
     // Main data and objects
-    Renderer renderer;
+    Renderer renderer(window);
+    WorldState worldState;
     // Debug: create a red cube
-    RedCube cub;
+    worldState.spawnObject(new RedCube(0, 0));
 
     while (window.isOpen()) {
         for (auto event = sf::Event{}; window.pollEvent(event);) {
@@ -21,12 +27,12 @@ int main() {
             }
         }
 
+        // Update the world
+        worldState.update();
+
+        // Render the world
         window.clear();
-
-        // Debug: update and render the red cube
-        cub.update();
-        renderer.renderFromData(window, cub.getRenderData());
-
+        renderer.renderWorld(worldState);
         window.display();
     }
 }

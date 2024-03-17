@@ -18,6 +18,8 @@ add_executable(PlatScifi
     src/worldobject.h
     src/renderer.cpp
     src/renderer.h
+    src/worldstate.cpp
+    src/worldstate.h
 )
 target_link_libraries(PlatScifi PRIVATE sfml-graphics)
 target_compile_features(PlatScifi PRIVATE cxx_std_17)

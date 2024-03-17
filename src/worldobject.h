@@ -13,17 +13,11 @@ protected:
 
 public:
     // Create the WorldObject
-    WorldObject() {
-        coordType = CoordType::World;
-        locx = 0.0;
-        locy = 0.0;
-        width = 1.0;
-        height = 1.0;
-    }
+    WorldObject();
 
     // Update each frame
-    void update(/*WorldState& worldState*/);
+    virtual void update(/*WorldState& worldState*/);
 
     // Return the results to render
-    RenderData getRenderData();
+    virtual RenderData getRenderData();
 };

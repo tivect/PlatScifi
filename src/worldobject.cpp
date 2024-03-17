@@ -1,5 +1,13 @@
 #include "worldobject.h"
 
+WorldObject::WorldObject() {
+    coordType = CoordType::World;
+    locx = 0.0;
+    locy = 0.0;
+    width = 1.0;
+    height = 1.0;
+}
+
 void WorldObject::update() {
     // Update
 }
