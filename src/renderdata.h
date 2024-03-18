@@ -31,5 +31,5 @@ struct RenderData {
     double width;
     double height;
     Color color;
-    std::string imageSource;
+    std::string imageSource; // Source image from src
 };

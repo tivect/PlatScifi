@@ -1,6 +1,14 @@
 #pragma once
 
+#include <vector>
 #include "renderdata.h"
+//#include "worldstate.h"
+
+// The result of an update function
+enum class UpdateResult {
+    None,
+    Destroy
+};
 
 // Stores a world object
 class WorldObject {
@@ -16,7 +24,12 @@ public:
     WorldObject();
 
     // Update each frame
-    virtual void update(/*WorldState& worldState*/);
+    virtual UpdateResult update(/*WorldState& worldState*/);
+
+    // TODO: delete this function
+    void tester(std::vector<WorldObject*>& v) {
+        // Do stuff with v
+    }
 
     // Return the results to render
     virtual RenderData getRenderData();

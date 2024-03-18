@@ -8,8 +8,9 @@ WorldObject::WorldObject() {
     height = 1.0;
 }
 
-void WorldObject::update() {
+UpdateResult WorldObject::update() {
     // Update
+    return UpdateResult::None;
 }
 
 RenderData WorldObject::getRenderData() {

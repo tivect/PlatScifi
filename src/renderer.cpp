@@ -39,7 +39,33 @@ void Renderer::renderFromData(RenderData& data) {
         window.draw(toRender);
     } else {
         // Image
-        // TODO: implement
+        // Load the image source file
+        // TODO: refactor loading the image source to an ImageHandler class
+        // TODO: with a hashmap that provides the image or loads it
+        sf::Image img;
+        if (!img.loadFromFile(data.imageSource)) {
+            // Error
+            // TODO: handle
+            return;
+        }
+        sf::Texture tex;
+        sf::Sprite toRender;
+        if (data.coordType == CoordType::Screen) {
+            // Literal coordinates
+            tex.create(data.width, data.height);
+            tex.update(img);
+            toRender.setTexture(tex);
+            toRender.setPosition(data.locx, data.locy);
+        } else {
+            // Convert from world to screen coordinates
+            // TODO: conversion (for testing, 30 pixels is one world unit)
+            // TODO: render from the center position?
+            tex.create(data.width * 30, data.height * 30);
+            tex.update(img);
+            toRender.setTexture(tex);
+            toRender.setPosition(data.locx * 30, data.locy * 30);
+        }
+        window.draw(toRender);
     }
 }
 

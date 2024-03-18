@@ -12,12 +12,13 @@ public:
     }
 
     // Override update: move right over time
-    void update() {
+    UpdateResult update() {
         locx += 0.1;
         if (locx > 30) {
             locy += 1;
             locx = 0;
         }
+        return UpdateResult::None;
     }
 
     // Override rendering

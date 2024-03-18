@@ -7,6 +7,7 @@
 #include "worldobject.h"
 #include "worldobjects/redcube.h" // Debugging
 #include "worldobjects/bluecube.h"
+#include "worldobjects/stationaryimage.h"
 
 // SFML Demo
 int main() {
@@ -21,6 +22,8 @@ int main() {
     // Debug: create a red cube
     worldState.spawnObject(new RedCube(0, 0));
     worldState.spawnObject(new BlueCube());
+    // TODO: get images working
+    //worldState.spawnObject(new StationaryImage(6, 6, 2, 2, "assets/tiv_logo.png"));
 
     while (window.isOpen()) {
         for (auto event = sf::Event{}; window.pollEvent(event);) {

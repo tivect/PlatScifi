@@ -4,13 +4,21 @@
 
 // Store a blue cube
 class BlueCube : public WorldObject {
+private:
+    double velx = 0.3;
+    double vely = 0.15;
+
 public:
     BlueCube() : WorldObject() {}
     
     // Override the update function
-    void update() {
-        locx += 0.3;
-        locy += 0.15;
+    UpdateResult update() {
+        locx += velx;
+        if (locx > 64 || locx < 0) velx *= -1;
+        locy += vely;
+        if (locy > 36 || locy < 0) vely *= -1;
+        
+        return UpdateResult::None;
     }
 
     // Override the render function
