@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
+#include "assethandler.h"
 #include "renderer.h"
 #include "renderdata.h"
 #include "worldstate.h"
@@ -17,13 +18,13 @@ int main() {
     // TODO: build not working on Linux?
 
     // Main data and objects
-    Renderer renderer(window);
+    AssetHandler assetHandler;
+    Renderer renderer(window, assetHandler);
     WorldState worldState;
-    // Debug: create a red cube
+    // Debug: create a red cube, blue cube, and image
     worldState.spawnObject(new RedCube(0, 0));
     worldState.spawnObject(new BlueCube());
-    // TODO: get images working
-    //worldState.spawnObject(new StationaryImage(6, 6, 2, 2, "assets/tiv_logo.png"));
+    worldState.spawnObject(new StationaryImage(6, 6, 2, 2, "assets/tiv_logo.png"));
 
     while (window.isOpen()) {
         for (auto event = sf::Event{}; window.pollEvent(event);) {

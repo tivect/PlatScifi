@@ -16,6 +16,8 @@ add_executable(PlatScifi
     src/renderdata.h
     src/worldobject.cpp
     src/worldobject.h
+    src/assethandler.cpp
+    src/assethandler.h
     src/renderer.cpp
     src/renderer.h
     src/worldstate.cpp
@@ -27,21 +29,32 @@ add_executable(PlatScifi
 target_link_libraries(PlatScifi PRIVATE sfml-graphics)
 target_compile_features(PlatScifi PRIVATE cxx_std_17)
 
+# originally copied over assets here
+
+
+if(WIN32)
+    add_custom_command(
+        TARGET PlatScifi
+        COMMENT "Copy OpenAL DLL"
+        PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${SFML_SOURCE_DIR}/extlibs/bin/$<IF:$<EQUAL:${CMAKE_SIZEOF_VOID_P},8>,x64,x86>/openal32.dll $<TARGET_FILE_DIR:PlatScifi>
+        VERBATIM)
+endif()
+
+install(TARGETS PlatScifi)
+
 # Copy over the assets folder
 set(ASSETS
-    testtex.txt
+    essential.txt
     tiv_logo.png
-    tiv_logo.txt
-    screenshot.jpg
 )
 
 foreach(ASSET ${ASSETS})
     # This makes files, but corrupts image files
-    file(GENERATE OUTPUT "bin/Debug/assets/${ASSET}" INPUT "src/assets/${ASSET}")
-    file(GENERATE OUTPUT "bin/Release/assets/${ASSET}" INPUT "src/assets/${ASSET}")
+    # file(GENERATE OUTPUT "bin/Debug/assets/${ASSET}" INPUT "src/assets/${ASSET}")
+    # file(GENERATE OUTPUT "bin/Release/assets/${ASSET}" INPUT "src/assets/${ASSET}")
     # This does not work:
-    # file(COPY "src/assets/${ASSET}" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/bin/Debug/assets/${ASSET}")
-    # file(COPY "src/assets/${ASSET}" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/bin/Release/assets/${ASSET}")
+    file(COPY "src/assets/${ASSET}" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/bin/Debug/assets/")
+    file(COPY "src/assets/${ASSET}" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/bin/Release/assets/")
 endforeach()
 
 # foreach(ASSET ${ASSETS})
@@ -59,14 +72,3 @@ endforeach()
 #     COMMENT "Copying resources into binary directory"
 # )
 # add_dependencies(PlatScifi copy_resources)
-
-
-if(WIN32)
-    add_custom_command(
-        TARGET PlatScifi
-        COMMENT "Copy OpenAL DLL"
-        PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${SFML_SOURCE_DIR}/extlibs/bin/$<IF:$<EQUAL:${CMAKE_SIZEOF_VOID_P},8>,x64,x86>/openal32.dll $<TARGET_FILE_DIR:PlatScifi>
-        VERBATIM)
-endif()
-
-install(TARGETS PlatScifi)
