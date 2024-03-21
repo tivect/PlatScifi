@@ -10,7 +10,22 @@ FetchContent_Declare(SFML
     GIT_TAG 2.6.x)
 FetchContent_MakeAvailable(SFML)
 
-add_executable(PlatScifi src/main.cpp)
+# Add all source files
+add_executable(PlatScifi
+    src/main.cpp
+    src/renderdata.h
+    src/worldobject.cpp
+    src/worldobject.h
+    src/assethandler.cpp
+    src/assethandler.h
+    src/renderer.cpp
+    src/renderer.h
+    src/worldstate.cpp
+    src/worldstate.h
+    src/worldobjects/redcube.h
+    src/worldobjects/bluecube.h
+    src/worldobjects/stationaryimage.h
+)
 target_link_libraries(PlatScifi PRIVATE sfml-graphics)
 target_compile_features(PlatScifi PRIVATE cxx_std_17)
 
@@ -23,3 +38,18 @@ if(WIN32)
 endif()
 
 install(TARGETS PlatScifi)
+
+# Copy over the assets folder
+set(ASSETS
+    essential.txt
+    tiv_logo.png
+)
+
+foreach(ASSET ${ASSETS})
+    # This makes files, but corrupts image files
+    # file(GENERATE OUTPUT "bin/Debug/assets/${ASSET}" INPUT "src/assets/${ASSET}")
+    # file(GENERATE OUTPUT "bin/Release/assets/${ASSET}" INPUT "src/assets/${ASSET}")
+    # This copies the asset into the build assets folder:
+    file(COPY "src/assets/${ASSET}" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/bin/Debug/assets/")
+    file(COPY "src/assets/${ASSET}" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/bin/Release/assets/")
+endforeach()
