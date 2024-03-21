@@ -11,6 +11,7 @@ FetchContent_Declare(SFML
 FetchContent_MakeAvailable(SFML)
 
 # Add all source files
+# TODO: glob?
 add_executable(PlatScifi
     src/main.cpp
     src/renderdata.h
@@ -25,6 +26,7 @@ add_executable(PlatScifi
     src/worldobjects/redcube.h
     src/worldobjects/bluecube.h
     src/worldobjects/stationaryimage.h
+    src/worldobjects/player.h
 )
 target_link_libraries(PlatScifi PRIVATE sfml-graphics)
 target_compile_features(PlatScifi PRIVATE cxx_std_17)

@@ -9,7 +9,10 @@ private:
     double vely = 0.15;
 
 public:
-    BlueCube() : WorldObject() {}
+    BlueCube(double spawnx, double spawny) : WorldObject() {
+        locx = spawnx;
+        locy = spawny;
+    }
     
     // Override the update function
     UpdateResult update() {
