@@ -1,6 +1,6 @@
 #pragma once
 
-#include "worldobject.h"
+#include "../worldobject.h"
 
 // Store a blue cube
 class BlueCube : public WorldObject {

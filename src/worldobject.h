@@ -27,9 +27,9 @@ public:
     virtual UpdateResult update(/*WorldState& worldState*/);
 
     // TODO: delete this function
-    void tester(std::vector<WorldObject*>& v) {
+    /*void tester(std::vector<WorldObject*>& v) {
         // Do stuff with v
-    }
+    }*/
 
     // Return the results to render
     virtual RenderData getRenderData();

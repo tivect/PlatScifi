@@ -1,6 +1,6 @@
 #pragma once
 
-#include "worldobject.h"
+#include "../worldobject.h"
 
 // Stores a red cube for debugging purposes
 class RedCube : public WorldObject {

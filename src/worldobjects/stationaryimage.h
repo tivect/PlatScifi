@@ -1,6 +1,6 @@
 #pragma once
 
-#include "worldobject.h"
+#include "../worldobject.h"
 
 // Stores a stationary image at a point in space
 class StationaryImage : public WorldObject {

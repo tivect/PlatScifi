@@ -67,8 +67,8 @@ void Renderer::renderFromData(RenderData& data) {
 }
 
 void Renderer::renderWorld(WorldState& worldState) {
-    for (auto it = worldState.objectsBegin(); it != worldState.objectsEnd(); it++) {
+    // todo: fix on mac/linux
+    for (std::vector<WorldObject*>::iterator it = worldState.objectsBegin(); it != worldState.objectsEnd(); it++) {
         renderFromData((*it)->getRenderData());
     }
-    // todo: impl
 }

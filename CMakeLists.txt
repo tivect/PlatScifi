@@ -29,9 +29,6 @@ add_executable(PlatScifi
 target_link_libraries(PlatScifi PRIVATE sfml-graphics)
 target_compile_features(PlatScifi PRIVATE cxx_std_17)
 
-# originally copied over assets here
-
-
 if(WIN32)
     add_custom_command(
         TARGET PlatScifi
@@ -52,23 +49,7 @@ foreach(ASSET ${ASSETS})
     # This makes files, but corrupts image files
     # file(GENERATE OUTPUT "bin/Debug/assets/${ASSET}" INPUT "src/assets/${ASSET}")
     # file(GENERATE OUTPUT "bin/Release/assets/${ASSET}" INPUT "src/assets/${ASSET}")
-    # This does not work:
+    # This copies the asset into the build assets folder:
     file(COPY "src/assets/${ASSET}" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/bin/Debug/assets/")
     file(COPY "src/assets/${ASSET}" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/bin/Release/assets/")
 endforeach()
-
-# foreach(ASSET ${ASSETS})
-
-# add_custom_command(TARGET PlatScifi POST_BUILD
-#     COMMAND ${CMAKE_COMMAND} -E copy_directory
-#     ${PROJECT_SOURCE_DIR}/assets
-#     ${PROEJCT_BINARY_DIR}/assets
-# )
-
-# add_custom_target(copy_resources ALL
-#     COMMAND ${CMAKE_COMMAND} -E copy_directory
-#     ${PROJECT_SOURCE_DIR}/assets
-#     ${CMAKE_CURRENT_BINARY_DIR}/assets
-#     COMMENT "Copying resources into binary directory"
-# )
-# add_dependencies(PlatScifi copy_resources)
