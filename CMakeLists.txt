@@ -30,6 +30,7 @@ add_executable(PlatScifi
     src/worldobjects/stationaryimage.h
     src/worldobjects/player.h
     src/worldobjects/staticcollider.h
+    src/worldobjects/spike.h
 )
 target_link_libraries(PlatScifi PRIVATE sfml-graphics)
 target_compile_features(PlatScifi PRIVATE cxx_std_17)
@@ -48,6 +49,8 @@ install(TARGETS PlatScifi)
 set(ASSETS
     essential.txt
     tiv_logo.png
+    grass1.png
+    spike.png
 )
 
 foreach(ASSET ${ASSETS})

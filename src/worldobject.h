@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <set>
 #include "renderdata.h"
 #include "worldstate.h"
 
@@ -8,6 +9,12 @@
 enum class UpdateResult {
     None,
     Destroy
+};
+
+// The attributes that an object can have
+enum class ObjectAttribute {
+    Collision,
+    Deadly
 };
 
 // Stores a world object
@@ -18,6 +25,8 @@ protected:
     double locy;
     double width;
     double height;
+    // TODO: enum instead of stringly typed?
+    std::set<ObjectAttribute> objectAttributes;
 
 public:
     // Create the WorldObject
@@ -33,6 +42,8 @@ public:
     double getLocy();
     double getWidth();
     double getHeight();
+
+    bool hasAttribute(ObjectAttribute attribute);
 
     // TODO: get whether a rectangle is inside of this object
 

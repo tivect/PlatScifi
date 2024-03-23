@@ -19,7 +19,7 @@ public:
     Renderer(sf::RenderWindow& window, AssetHandler& assetHandler);
 
     // Render from a RenderData object
-    void renderFromData(RenderData& data);
+    void renderFromData(RenderData data);
 
     // Set the camera
     void setCamera(double newWorldCameraCenterX, double newWorldCameraCenterY, double percentEasing = 0.0);

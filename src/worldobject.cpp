@@ -33,6 +33,10 @@ double WorldObject::getHeight() {
     return height;
 }
 
+bool WorldObject::hasAttribute(ObjectAttribute attribute) {
+    return objectAttributes.find(attribute) != objectAttributes.end();
+}
+
 RenderData WorldObject::getRenderData() {
     return {
         RenderType::Rectangle,

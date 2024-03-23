@@ -11,6 +11,7 @@
 #include "worldobjects/stationaryimage.h"
 #include "worldobjects/player.h"
 #include "worldobjects/staticcollider.h"
+#include "worldobjects/spike.h"
 
 // SFML Demo
 int main() {
@@ -29,10 +30,7 @@ int main() {
     Player* player = new Player(5, 10);
     gameState.spawnObject(player);
 
-    // Debug: create a red cube, blue cube, image, etc.
-    gameState.spawnObject(new RedCube(0, 0));
-    gameState.spawnObject(new BlueCube(0, 0));
-    gameState.spawnObject(new StationaryImage(6, 6, 2, 2, "assets/tiv_logo.png"));
+    // Debug: create a basic level
     // Bottom colliders
     gameState.spawnObject(new StaticCollider(3, 25, 6, 2));
     gameState.spawnObject(new StaticCollider(9, 27, 10, 2));
@@ -42,6 +40,8 @@ int main() {
     gameState.spawnObject(new StaticCollider(25, 0, 2, 19));
     // Extra blocks
     gameState.spawnObject(new StaticCollider(23, 29, 44, 19));
+    // Spike
+    gameState.spawnObject(new Spike(28, 28));
 
     // Main game loop
     while (window.isOpen()) {

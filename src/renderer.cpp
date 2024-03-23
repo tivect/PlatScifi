@@ -3,7 +3,7 @@
 Renderer::Renderer(sf::RenderWindow& window, AssetHandler& assetHandler)
     : window(window), assetHandler(assetHandler) { }
 
-void Renderer::renderFromData(RenderData& data) {
+void Renderer::renderFromData(RenderData data) {
     // TODO: implement other types (like images)
     if (data.type == RenderType::Rectangle) {
         // Rectangle

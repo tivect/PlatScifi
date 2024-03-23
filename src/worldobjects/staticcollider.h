@@ -11,6 +11,7 @@ public:
         locy = spawny;
         this->width = width;
         this->height = height;
+        objectAttributes.insert(ObjectAttribute::Collision);
     }
 
     // Override update: gravity
@@ -22,14 +23,14 @@ public:
     RenderData getRenderData() {
         // TODO: image/animations
         return {
-            RenderType::Rectangle,
+            RenderType::Image,
             coordType,
             locx,
             locy,
             width,
             height,
             { 14, 92, 81 },
-            ""
+            "assets/grass1.png"
         };
     }
 };

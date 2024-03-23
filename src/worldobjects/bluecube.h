@@ -12,6 +12,7 @@ public:
     BlueCube(double spawnx, double spawny) : WorldObject() {
         locx = spawnx;
         locy = spawny;
+        objectAttributes.insert(ObjectAttribute::Collision);
     }
     
     // Override the update function

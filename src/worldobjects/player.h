@@ -57,25 +57,36 @@ public:
         // todo: when hitting multiple?
         for (WorldObject* object : objects) {
             if (object == this) continue;
-            // X movement pushout
-            // todo: better way of doing the 0.1 thing
-            if (locy + height - 0.1 >= object->getLocy() && locy + 0.1 < object->getLocy() + object->getHeight()) {
-                // Within the y
-                if (locx + width > object->getLocx() && locx < object->getLocx() + object->getWidth()) {
-                    // Side wall
-                    locx -= velx;
-                    velx = 0;
+            bool collided = false;
+            if (object->hasAttribute(ObjectAttribute::Collision)) {
+                // X movement pushout
+                // todo: better way of doing the 0.1 thing
+                if (locy + height - 0.1 >= object->getLocy() && locy + 0.1 < object->getLocy() + object->getHeight()) {
+                    // Within the y
+                    if (locx + width > object->getLocx() && locx < object->getLocx() + object->getWidth()) {
+                        // Side wall
+                        locx -= velx;
+                        velx = 0;
+                        collided = true;
+                    }
+                }
+                if (locx + width >= object->getLocx() && locx < object->getLocx() + object->getWidth()) {
+                    // Within the x
+                    if (locy + height > object->getLocy() && locy < object->getLocy() + object->getHeight()) {
+                        // Floor/ceiling
+                        locy -= vely;
+                        vely = 0;
+                        collided = true;
+                        // todo: should not be on ground on a bottom corner
+                        onGround = true;
+                    }
                 }
             }
-            if (locx + width >= object->getLocx() && locx < object->getLocx() + object->getWidth()) {
-                // Within the x
-                if (locy + height > object->getLocy() && locy < object->getLocy() + object->getHeight()) {
-                    // Floor/ceiling
-                    locy -= vely;
-                    vely = 0;
-                    // todo: should not be on ground on a bottom corner
-                    onGround = true;
-                }
+            // Collision stuff
+            if (collided && object->hasAttribute(ObjectAttribute::Deadly)) {
+                // Die
+                // todo: impl
+                teleport(5, 10);
             }
         }
         return UpdateResult::None;
@@ -91,7 +102,7 @@ public:
             locy,
             width,
             height,
-            { 255, 0, 0 },
+            { 0, 255, 0 },
             ""
         };
     }
