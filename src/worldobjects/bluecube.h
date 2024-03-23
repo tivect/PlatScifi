@@ -15,7 +15,7 @@ public:
     }
     
     // Override the update function
-    UpdateResult update() {
+    UpdateResult update(WorldState& worldState, std::vector<WorldObject*>& objects) {
         locx += velx;
         if (locx > 64 || locx < 0) velx *= -1;
         locy += vely;

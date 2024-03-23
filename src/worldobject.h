@@ -2,7 +2,7 @@
 
 #include <vector>
 #include "renderdata.h"
-//#include "worldstate.h"
+#include "worldstate.h"
 
 // The result of an update function
 enum class UpdateResult {
@@ -24,12 +24,17 @@ public:
     WorldObject();
 
     // Update each frame
-    virtual UpdateResult update(/*WorldState& worldState*/);
+    virtual UpdateResult update(WorldState& worldState, std::vector<WorldObject*>& objects);
 
-    // TODO: delete this function
-    /*void tester(std::vector<WorldObject*>& v) {
-        // Do stuff with v
-    }*/
+    // Get whether a point is inside of this object
+    double isPointInside(float x, float y);
+
+    double getLocx();
+    double getLocy();
+    double getWidth();
+    double getHeight();
+
+    // TODO: get whether a rectangle is inside of this object
 
     // Return the results to render
     virtual RenderData getRenderData();

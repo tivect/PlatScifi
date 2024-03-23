@@ -66,9 +66,9 @@ void Renderer::renderFromData(RenderData& data) {
     }
 }
 
-void Renderer::renderWorld(WorldState& worldState) {
+void Renderer::renderWorldObjects(GameState& gameState) {
     // todo: fix on mac/linux
-    for (std::vector<WorldObject*>::iterator it = worldState.objectsBegin(); it != worldState.objectsEnd(); it++) {
+    for (std::vector<WorldObject*>::iterator it = gameState.objectsBegin(); it != gameState.objectsEnd(); it++) {
         renderFromData((*it)->getRenderData());
     }
 }

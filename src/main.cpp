@@ -4,12 +4,13 @@
 #include "assethandler.h"
 #include "renderer.h"
 #include "renderdata.h"
-#include "worldstate.h"
+#include "gamestate.h"
 #include "worldobject.h"
 #include "worldobjects/redcube.h" // Debugging
 #include "worldobjects/bluecube.h"
 #include "worldobjects/stationaryimage.h"
 #include "worldobjects/player.h"
+#include "worldobjects/staticcollider.h"
 
 // SFML Demo
 int main() {
@@ -21,17 +22,24 @@ int main() {
     // Main data and objects
     AssetHandler assetHandler;
     Renderer renderer(window, assetHandler);
-    WorldState worldState;
+    GameState gameState;
     std::set<sf::Keyboard::Key> keysPressed;
 
     // Main world objects
-    Player* player = new Player(4, 10);
-    worldState.spawnObject(player);
+    Player* player = new Player(5, 10);
+    gameState.spawnObject(player);
 
-    // Debug: create a red cube, blue cube, and image
-    worldState.spawnObject(new RedCube(0, 0));
-    worldState.spawnObject(new BlueCube(0, 0));
-    worldState.spawnObject(new StationaryImage(6, 6, 2, 2, "assets/tiv_logo.png"));
+    // Debug: create a red cube, blue cube, image, etc.
+    gameState.spawnObject(new RedCube(0, 0));
+    gameState.spawnObject(new BlueCube(0, 0));
+    gameState.spawnObject(new StationaryImage(6, 6, 2, 2, "assets/tiv_logo.png"));
+    // Bottom colliders
+    gameState.spawnObject(new StaticCollider(3, 25, 6, 2));
+    gameState.spawnObject(new StaticCollider(9, 27, 10, 2));
+    gameState.spawnObject(new StaticCollider(19, 25, 6, 2));
+    // Vertical colliders
+    gameState.spawnObject(new StaticCollider(0, 0, 2, 25));
+    gameState.spawnObject(new StaticCollider(25, 0, 2, 19));
 
     // Main game loop
     while (window.isOpen()) {
@@ -49,28 +57,31 @@ int main() {
 
         // Use input
         if (keysPressed.find(sf::Keyboard::A) != keysPressed.end()) {
-            player->move(-0.2, 0);
+            player->accelerate(-0.05, 0);
         }
         if (keysPressed.find(sf::Keyboard::D) != keysPressed.end()) {
-            player->move(0.2, 0);
+            player->accelerate(0.05, 0);
         }
-        if (keysPressed.find(sf::Keyboard::W) != keysPressed.end()) {
-            player->move(0, -0.2);
+        if (
+            keysPressed.find(sf::Keyboard::W) != keysPressed.end()
+            || keysPressed.find(sf::Keyboard::Space) != keysPressed.end()
+        ) {
+            player->jump();
         }
         if (keysPressed.find(sf::Keyboard::S) != keysPressed.end()) {
-            player->move(0, 0.2);
+            player->accelerate(0, 0.05);
         }
-        if (keysPressed.find(sf::Keyboard::Space) != keysPressed.end()) {
-            worldState.spawnObject(new BlueCube(player->getLocx(), player->getLocy()));
+        /*if () {
+            gameState.spawnObject(new BlueCube(player->getLocx(), player->getLocy()));
             keysPressed.erase(sf::Keyboard::Space);
-        }
+        }*/
 
-        // Update the world
-        worldState.update();
+        // Update the game and world
+        gameState.update();
 
-        // Render the world
+        // Render the game and world
         window.clear();
-        renderer.renderWorld(worldState);
+        renderer.renderWorldObjects(gameState);
         window.display();
     }
 }

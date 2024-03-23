@@ -18,7 +18,7 @@ public:
     }
 
     // Override update: do nothing
-    UpdateResult update() {
+    UpdateResult update(WorldState& worldState, std::vector<WorldObject*>& objects) {
         return UpdateResult::None;
     }
 

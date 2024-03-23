@@ -23,10 +23,13 @@ add_executable(PlatScifi
     src/renderer.h
     src/worldstate.cpp
     src/worldstate.h
+    src/gamestate.cpp
+    src/gamestate.h
     src/worldobjects/redcube.h
     src/worldobjects/bluecube.h
     src/worldobjects/stationaryimage.h
     src/worldobjects/player.h
+    src/worldobjects/staticcollider.h
 )
 target_link_libraries(PlatScifi PRIVATE sfml-graphics)
 target_compile_features(PlatScifi PRIVATE cxx_std_17)

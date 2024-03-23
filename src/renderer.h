@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "worldstate.h"
+#include "gamestate.h"
 #include "renderdata.h"
 #include "assethandler.h"
 
@@ -19,5 +19,5 @@ public:
     void renderFromData(RenderData& data);
 
     // Render the entire world
-    void renderWorld(WorldState& worldState);
+    void renderWorldObjects(GameState& worldState);
 };
