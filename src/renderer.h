@@ -10,6 +10,9 @@ class Renderer {
 private:
     sf::RenderWindow& window;
     AssetHandler& assetHandler;
+    double worldCameraCenterX = 0;
+    double worldCameraCenterY = 0;
+    int screenPixPerWorld = 32;
 
 public:
     // Create the renderer
@@ -17,6 +20,9 @@ public:
 
     // Render from a RenderData object
     void renderFromData(RenderData& data);
+
+    // Set the camera
+    void setCamera(double newWorldCameraCenterX, double newWorldCameraCenterY, double percentEasing = 0.0);
 
     // Render the entire world
     void renderWorldObjects(GameState& worldState);

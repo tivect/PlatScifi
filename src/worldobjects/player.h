@@ -5,8 +5,9 @@
 // The data for the player
 class Player : public WorldObject {
 private:
-    float velx = 0;
-    float vely = 0;
+    double velx = 0;
+    double vely = 0;
+    bool onGround = false;
 
 public:
     // Constructor
@@ -24,7 +25,9 @@ public:
 
     // Input: jump
     void jump() {
-        vely = -0.4;
+        if (onGround) {
+            vely = -0.5;
+        }
     }
 
     double getLocx() {
@@ -35,6 +38,11 @@ public:
         return locy;
     }
 
+    void teleport(double locx, double locy) {
+        this->locx = locx;
+        this->locy = locy;
+    }
+
     // Override update: gravity and acceleration
     UpdateResult update(WorldState& worldState, std::vector<WorldObject*>& objects) {
         vely += worldState.getGravityStrength();
@@ -42,8 +50,8 @@ public:
         vely *= 0.96;
         locx += velx;
         locy += vely;
-        //if (velx < 0.01 && velx >= -0.01) velx = 0;
-        // Check collision
+        // Check collision and update
+        onGround = false;
         // todo: refactor
         // todo: only check with types enabling collision
         // todo: when hitting multiple?
@@ -65,6 +73,8 @@ public:
                     // Floor/ceiling
                     locy -= vely;
                     vely = 0;
+                    // todo: should not be on ground on a bottom corner
+                    onGround = true;
                 }
             }
         }

@@ -14,10 +14,10 @@ void Renderer::renderFromData(RenderData& data) {
             toRender.setPosition(sf::Vector2f(data.locx, data.locy));
         } else {
             // Convert from world to screen coordinates
-            // TODO: conversion (for testing, 30 pixels is one world unit)
             // TODO: render from the center position?
-            toRender.setSize(sf::Vector2f(data.width * 30, data.height * 30));
-            toRender.setPosition(sf::Vector2f(data.locx * 30, data.locy * 30));
+            // TODO: do not render if out of screen range
+            toRender.setSize(sf::Vector2f(data.width * screenPixPerWorld, data.height * screenPixPerWorld));
+            toRender.setPosition(sf::Vector2f((data.locx - worldCameraCenterX) * screenPixPerWorld + window.getSize().x / 2.0, (data.locy - worldCameraCenterY) * screenPixPerWorld + window.getSize().y / 2.0));
         }
         toRender.setFillColor(sf::Color(data.color.r, data.color.g, data.color.b));
         window.draw(toRender);
@@ -30,18 +30,16 @@ void Renderer::renderFromData(RenderData& data) {
             toRender.setPosition(sf::Vector2f(data.locx, data.locy));
         } else {
             // Convert from world to screen coordinates
-            // TODO: conversion (for testing, 30 pixels is one world unit)
             // TODO: render from the center position?
-            toRender.setRadius((data.width + data.height) / 4 * 30);
-            toRender.setPosition(sf::Vector2f(data.locx * 30, data.locy * 30));
+            toRender.setRadius((data.width + data.height) / 4 * screenPixPerWorld);
+            toRender.setPosition(sf::Vector2f((data.locx - worldCameraCenterX) * screenPixPerWorld + window.getSize().x / 2.0, (data.locy - worldCameraCenterY) * screenPixPerWorld + window.getSize().y / 2.0));
         }
         toRender.setFillColor(sf::Color(data.color.r, data.color.g, data.color.b));
         window.draw(toRender);
     } else {
         // Image
         // Load the image source file
-        // TODO: refactor loading the image source (or tex?) to an ImageHandler class
-        // TODO: with a hashmap that provides the image or loads it
+        // TODO: refactor loading the texture as well?
         sf::Image img = assetHandler.getImage(data.imageSource);
         sf::Texture tex;
         sf::Sprite toRender;
@@ -54,16 +52,20 @@ void Renderer::renderFromData(RenderData& data) {
             toRender.setScale(data.width / img.getSize().x, data.height / img.getSize().y);
         } else {
             // Convert from world to screen coordinates
-            // TODO: conversion (for testing, 30 pixels is one world unit)
             // TODO: render from the center position?
             tex.create(img.getSize().x, img.getSize().y);
             tex.update(img);
             toRender.setTexture(tex);
-            toRender.setPosition(data.locx * 30, data.locy * 30);
-            toRender.setScale(data.width * 30 / img.getSize().x, data.height * 30 / img.getSize().y);
+            toRender.setPosition(sf::Vector2f((data.locx - worldCameraCenterX) * screenPixPerWorld + window.getSize().x / 2.0, (data.locy - worldCameraCenterY) * screenPixPerWorld + window.getSize().y / 2.0));
+            toRender.setScale(data.width * screenPixPerWorld / img.getSize().x, data.height * screenPixPerWorld / img.getSize().y);
         }
         window.draw(toRender);
     }
+}
+
+void Renderer::setCamera(double newWorldCameraCenterX, double newWorldCameraCenterY, double percentEasing) {
+    worldCameraCenterX = worldCameraCenterX * percentEasing + newWorldCameraCenterX * (1 - percentEasing);
+    worldCameraCenterY = worldCameraCenterY * percentEasing + newWorldCameraCenterY * (1 - percentEasing);
 }
 
 void Renderer::renderWorldObjects(GameState& gameState) {

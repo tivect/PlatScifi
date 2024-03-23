@@ -27,7 +27,7 @@ public:
     virtual UpdateResult update(WorldState& worldState, std::vector<WorldObject*>& objects);
 
     // Get whether a point is inside of this object
-    double isPointInside(float x, float y);
+    double isPointInside(double x, double y);
 
     double getLocx();
     double getLocy();

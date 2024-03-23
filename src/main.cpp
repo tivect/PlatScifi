@@ -40,6 +40,8 @@ int main() {
     // Vertical colliders
     gameState.spawnObject(new StaticCollider(0, 0, 2, 25));
     gameState.spawnObject(new StaticCollider(25, 0, 2, 19));
+    // Extra blocks
+    gameState.spawnObject(new StaticCollider(23, 29, 44, 19));
 
     // Main game loop
     while (window.isOpen()) {
@@ -71,16 +73,22 @@ int main() {
         if (keysPressed.find(sf::Keyboard::S) != keysPressed.end()) {
             player->accelerate(0, 0.05);
         }
-        /*if () {
+        if (keysPressed.find(sf::Keyboard::R) != keysPressed.end()) {
+            // Restart to spawn location
+            player->teleport(5.0, 10.0);
+        }
+        if (keysPressed.find(sf::Keyboard::P) != keysPressed.end()) {
+            // Debug: spawn blue cubes
             gameState.spawnObject(new BlueCube(player->getLocx(), player->getLocy()));
-            keysPressed.erase(sf::Keyboard::Space);
-        }*/
+            keysPressed.erase(sf::Keyboard::P);
+        }
 
         // Update the game and world
         gameState.update();
 
         // Render the game and world
         window.clear();
+        renderer.setCamera(player->getLocx(), player->getLocy(), 0.8);
         renderer.renderWorldObjects(gameState);
         window.display();
     }

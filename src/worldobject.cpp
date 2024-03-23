@@ -13,7 +13,7 @@ UpdateResult WorldObject::update(WorldState& worldState, std::vector<WorldObject
     return UpdateResult::None;
 }
 
-double WorldObject::isPointInside(float x, float y) {
+double WorldObject::isPointInside(double x, double y) {
     return (x >= locx && x < locx + width && y > locy && y < locy + height);
 }
 
