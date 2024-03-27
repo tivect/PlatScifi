@@ -25,7 +25,6 @@ protected:
     double locy;
     double width;
     double height;
-    // TODO: enum instead of stringly typed?
     std::set<ObjectAttribute> objectAttributes;
 
 public:

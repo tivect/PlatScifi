@@ -5,13 +5,9 @@
 #include "renderer.h"
 #include "renderdata.h"
 #include "gamestate.h"
+#include "worldspawner.h"
 #include "worldobject.h"
-#include "worldobjects/redcube.h" // Debugging
-#include "worldobjects/bluecube.h"
-#include "worldobjects/stationaryimage.h"
-#include "worldobjects/player.h"
-#include "worldobjects/staticcollider.h"
-#include "worldobjects/spike.h"
+#include "worldobjectincludes.h"
 
 // SFML Demo
 int main() {
@@ -24,13 +20,16 @@ int main() {
     AssetHandler assetHandler;
     Renderer renderer(window, assetHandler);
     GameState gameState;
+    WorldSpawner worldSpawner;
     std::set<sf::Keyboard::Key> keysPressed;
 
     // Main world objects
     Player* player = new Player(5, 10);
     gameState.spawnObject(player);
 
-    // Debug: create a basic level
+    // Debug: load a basic level from a txt file
+    worldSpawner.spawnWorld(gameState, "assets/level_0.csv");
+    /*// Example level (level_0.csv)
     // Bottom colliders
     gameState.spawnObject(new StaticCollider(3, 25, 6, 2));
     gameState.spawnObject(new StaticCollider(9, 27, 10, 2));
@@ -41,7 +40,7 @@ int main() {
     // Extra blocks
     gameState.spawnObject(new StaticCollider(23, 29, 44, 19));
     // Spike
-    gameState.spawnObject(new Spike(28, 28));
+    gameState.spawnObject(new Spike(28, 28));*/
 
     // Main game loop
     while (window.isOpen()) {
@@ -87,7 +86,7 @@ int main() {
         gameState.update();
 
         // Render the game and world
-        window.clear();
+        window.clear(sf::Color(111, 201, 252));
         renderer.setCamera(player->getLocx(), player->getLocy(), 0.8);
         renderer.renderWorldObjects(gameState);
         window.display();

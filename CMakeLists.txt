@@ -25,11 +25,15 @@ add_executable(PlatScifi
     src/worldstate.h
     src/gamestate.cpp
     src/gamestate.h
+    src/worldspawner.cpp
+    src/worldspawner.h
+    src/worldobjectincludes.h
     src/worldobjects/redcube.h
     src/worldobjects/bluecube.h
     src/worldobjects/stationaryimage.h
     src/worldobjects/player.h
     src/worldobjects/staticcollider.h
+    src/worldobjects/staticdeadly.h
     src/worldobjects/spike.h
 )
 target_link_libraries(PlatScifi PRIVATE sfml-graphics)
@@ -51,6 +55,7 @@ set(ASSETS
     tiv_logo.png
     grass1.png
     spike.png
+    level_0.csv
 )
 
 foreach(ASSET ${ASSETS})

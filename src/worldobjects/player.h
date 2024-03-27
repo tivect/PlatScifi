@@ -46,7 +46,7 @@ public:
     // Override update: gravity and acceleration
     UpdateResult update(WorldState& worldState, std::vector<WorldObject*>& objects) {
         vely += worldState.getGravityStrength();
-        velx *= 0.96;
+        velx *= 0.88;
         vely *= 0.96;
         locx += velx;
         locy += vely;
