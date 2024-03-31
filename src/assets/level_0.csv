@@ -1,5 +1,5 @@
 // Example level (level_0)
-nextLevelName level_1
+nextLevelName, level_1
 // Bottom colliders
 StaticCollider, 3, 25, 6, 2
 StaticCollider, 9, 27, 10, 2

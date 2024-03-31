@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <set>
+#include "constants.h"
 #include "assethandler.h"
 #include "renderer.h"
 #include "renderdata.h"
@@ -9,7 +10,7 @@
 #include "worldobject.h"
 #include "worldobjectincludes.h"
 
-// SFML Demo
+// Entry point
 int main() {
     auto window = sf::RenderWindow{ { 1920u, 1080u }, "PlatScifi" };
     window.setFramerateLimit(144);
@@ -27,8 +28,8 @@ int main() {
     Player* player = new Player(5, 10);
     gameState.spawnObject(player);
 
-    // Debug: load a basic level from a txt file
-    worldSpawner.spawnWorld(gameState, "level_0");
+    // Load the first level (depends on the mode)
+    worldSpawner.spawnWorld(gameState, LEVEL_DESIGN_MODE ? "level_design" : "level_1");
     /*// Example level (level_0.csv)
     // Bottom colliders
     gameState.spawnObject(new StaticCollider(3, 25, 6, 2));
@@ -67,7 +68,8 @@ int main() {
             keysPressed.find(sf::Keyboard::W) != keysPressed.end()
             || keysPressed.find(sf::Keyboard::Space) != keysPressed.end()
         ) {
-            player->jump();
+            if (LEVEL_DESIGN_MODE) player->accelerate(0, -0.05);
+            else player->jump();
         }
         if (keysPressed.find(sf::Keyboard::S) != keysPressed.end()) {
             player->accelerate(0, 0.05);
@@ -82,6 +84,10 @@ int main() {
             keysPressed.erase(sf::Keyboard::P);
         }
 
+        if (LEVEL_DESIGN_MODE) {
+            // Level Design Mode: keep reloading the world without updating it
+            worldSpawner.spawnWorld(gameState, gameState.getLevelName());
+        }
         // Update the game and world
         UpdateResult updateResult = gameState.update();
         if (updateResult == UpdateResult::NextLevel) {

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../worldobject.h"
+#include "../constants.h"
 
 // The data for the player
 class Player : public WorldObject {
@@ -46,7 +47,9 @@ public:
 
     // Override update: gravity and acceleration
     UpdateResult update(WorldState& worldState, std::vector<WorldObject*>& objects) {
-        vely += worldState.getGravityStrength();
+        if (!LEVEL_DESIGN_MODE) {
+            vely += worldState.getGravityStrength();
+        }
         velx *= 0.88;
         vely *= 0.96;
         locx += velx;

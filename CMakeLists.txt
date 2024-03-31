@@ -14,6 +14,7 @@ FetchContent_MakeAvailable(SFML)
 # TODO: glob?
 add_executable(PlatScifi
     src/main.cpp
+    src/constants.h
     src/renderdata.h
     src/worldobject.cpp
     src/worldobject.h

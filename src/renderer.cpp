@@ -1,7 +1,12 @@
 #include "renderer.h"
 
 Renderer::Renderer(sf::RenderWindow& window, AssetHandler& assetHandler)
-    : window(window), assetHandler(assetHandler) { }
+    : window(window), assetHandler(assetHandler) {
+        // Update the camera defaults if needed
+        if (LEVEL_DESIGN_MODE) {
+            screenPixPerWorld = 10; // Zoom out
+        }
+    }
 
 void Renderer::renderFromData(RenderData data) {
     // TODO: implement other types (like images)

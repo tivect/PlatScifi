@@ -4,6 +4,7 @@
 #include "gamestate.h"
 #include "renderdata.h"
 #include "assethandler.h"
+#include "constants.h"
 
 // Render the world
 class Renderer {
