@@ -8,13 +8,17 @@
 // The result of an update function
 enum class UpdateResult {
     None,
-    Destroy
+    Destroy,
+    NextLevel // TODO: better naming
 };
 
 // The attributes that an object can have
 enum class ObjectAttribute {
+    OverlapDetect,
     Collision,
-    Deadly
+    Deadly,
+    LevelTeleport,
+    Persist // Persist across levels
 };
 
 // Stores a world object

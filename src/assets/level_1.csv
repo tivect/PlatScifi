@@ -1,0 +1,7 @@
+// Example level (level_1)
+// Cycle back to the start
+nextLevelName level_0
+// Bottom collider
+StaticCollider, 2, 30, 30, 2
+// Next level
+LevelTp, 50, 29

@@ -31,9 +31,9 @@ public:
             RenderType::Image,
             coordType,
             locx,
-            locy - sin(frameCount / 400) * 0.3,
+            locy - sin(frameCount / 80.0) * 0.3,
             width,
-            height + sin(frameCount / 400) * 0.3,
+            height + sin(frameCount / 80.0) * 0.3,
             { 255, 0, 0 },
             "assets/spike.png"
         };

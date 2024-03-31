@@ -16,7 +16,7 @@ public:
 	objectAttributes.insert(ObjectAttribute::Deadly);
     }
 
-    // Override update: gravity
+    // Override update
     UpdateResult update(WorldState& worldState, std::vector<WorldObject*>& objects) {
         return UpdateResult::None;
     }

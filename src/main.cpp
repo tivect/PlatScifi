@@ -28,7 +28,7 @@ int main() {
     gameState.spawnObject(player);
 
     // Debug: load a basic level from a txt file
-    worldSpawner.spawnWorld(gameState, "assets/level_0.csv");
+    worldSpawner.spawnWorld(gameState, "level_0");
     /*// Example level (level_0.csv)
     // Bottom colliders
     gameState.spawnObject(new StaticCollider(3, 25, 6, 2));
@@ -83,7 +83,12 @@ int main() {
         }
 
         // Update the game and world
-        gameState.update();
+        UpdateResult updateResult = gameState.update();
+        if (updateResult == UpdateResult::NextLevel) {
+            // Load the next level, if possible
+            // TODO: impl better
+            worldSpawner.spawnWorld(gameState, gameState.getNextLevelName());
+        }
 
         // Render the game and world
         window.clear(sf::Color(111, 201, 252));

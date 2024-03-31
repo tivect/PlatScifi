@@ -34,6 +34,7 @@ add_executable(PlatScifi
     src/worldobjects/player.h
     src/worldobjects/staticcollider.h
     src/worldobjects/staticdeadly.h
+    src/worldobjects/leveltp.h
     src/worldobjects/spike.h
 )
 target_link_libraries(PlatScifi PRIVATE sfml-graphics)

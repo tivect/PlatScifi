@@ -7,3 +7,4 @@
 #include "worldobjects/staticcollider.h"
 #include "worldobjects/spike.h"
 #include "worldobjects/staticdeadly.h"
+#include "worldobjects/leveltp.h"

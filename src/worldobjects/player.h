@@ -14,6 +14,7 @@ public:
     Player(double spawnx, double spawny) : WorldObject() {
         locx = spawnx;
         locy = spawny;
+        objectAttributes.insert(ObjectAttribute::Persist);
     }
 
     // Input: acceleration
@@ -58,6 +59,7 @@ public:
         for (WorldObject* object : objects) {
             if (object == this) continue;
             bool collided = false;
+	        bool overlapped = false;
             if (object->hasAttribute(ObjectAttribute::Collision)) {
                 // X movement pushout
                 // todo: better way of doing the 0.1 thing
@@ -68,6 +70,7 @@ public:
                         locx -= velx;
                         velx = 0;
                         collided = true;
+			            overlapped = true;
                     }
                 }
                 if (locx + width >= object->getLocx() && locx < object->getLocx() + object->getWidth()) {
@@ -77,8 +80,18 @@ public:
                         locy -= vely;
                         vely = 0;
                         collided = true;
+			            overlapped = true;
                         // todo: should not be on ground on a bottom corner
                         onGround = true;
+                    }
+                }
+            }
+            if (object->hasAttribute(ObjectAttribute::OverlapDetect)) {
+                // Check overlap only
+                if (locy + height >= object->getLocy() && locy < object->getLocy() + object->getHeight()) {
+                    if (locx + width > object->getLocx() && locx < object->getLocx() + object->getWidth()) {
+                        // Hit
+                        overlapped = true;
                     }
                 }
             }
@@ -87,6 +100,12 @@ public:
                 // Die
                 // todo: impl
                 teleport(5, 10);
+            }
+            if (overlapped && object->hasAttribute(ObjectAttribute::LevelTeleport)) {
+                // Teleport to the next level
+                // TODO: impl better
+                teleport(5, 10);
+                return UpdateResult::NextLevel;
             }
         }
         return UpdateResult::None;
