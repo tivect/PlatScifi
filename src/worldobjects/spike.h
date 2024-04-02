@@ -3,18 +3,20 @@
 #include "../worldobject.h"
 
 // Stores a stationary image at a point in space
-class StationaryImage : public WorldObject {
+class Spike : public WorldObject {
 private:
-    std::string filename;
+    // Frame oscillations
+    long frameCount = 0;
 
 public:
     // Constructor: provide the name of the asset from assets (ex. "assets/tiv_logo.png")
-    StationaryImage(double spawnx, double spawny, double width, double height, std::string filename) : WorldObject() {
+    Spike(double spawnx, double spawny) : WorldObject() {
         locx = spawnx;
         locy = spawny;
-        this->width = width;
-        this->height = height;
-        this->filename = filename;
+        this->width = 1;
+        this->height = 1;
+        objectAttributes.insert(ObjectAttribute::Collision);
+        objectAttributes.insert(ObjectAttribute::Deadly);
     }
 
     // Override update: do nothing
@@ -24,15 +26,16 @@ public:
 
     // Override rendering
     RenderData getRenderData() {
+        frameCount++;
         return {
             RenderType::Image,
             coordType,
             locx,
-            locy,
+            locy - sin(frameCount / 80.0) * 0.3,
             width,
-            height,
+            height + sin(frameCount / 80.0) * 0.3,
             { 255, 0, 0 },
-            filename
+            "assets/spike.png"
         };
     }
 };

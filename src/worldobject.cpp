@@ -8,9 +8,33 @@ WorldObject::WorldObject() {
     height = 1.0;
 }
 
-UpdateResult WorldObject::update() {
+UpdateResult WorldObject::update(WorldState& worldState, std::vector<WorldObject*>& objects) {
     // Update
     return UpdateResult::None;
+}
+
+double WorldObject::isPointInside(double x, double y) {
+    return (x >= locx && x < locx + width && y > locy && y < locy + height);
+}
+
+double WorldObject::getLocx() {
+    return locx;
+}
+
+double WorldObject::getLocy() {
+    return locy;
+}
+
+double WorldObject::getWidth() {
+    return width;
+}
+
+double WorldObject::getHeight() {
+    return height;
+}
+
+bool WorldObject::hasAttribute(ObjectAttribute attribute) {
+    return objectAttributes.find(attribute) != objectAttributes.end();
 }
 
 RenderData WorldObject::getRenderData() {

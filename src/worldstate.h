@@ -1,23 +1,15 @@
 #pragma once
 
-#include <vector>
-#include "worldobject.h"
+#include <string>
 
-// Store the full state of the world and all objects
 class WorldState {
 private:
-    std::vector<WorldObject*> objects;
+    std::string levelName;
+    float gravityStrength = 0.01;
 
 public:
-    // Spawn an object
-    void spawnObject(WorldObject* object);
-    // Update
-    void update();
-    // Get all objects
-    std::vector<WorldObject*>::iterator objectsBegin();
-    std::vector<WorldObject*>::iterator objectsEnd();
-    // Clear all items
-    void clear();
-    // Destructor to free memory
-    ~WorldState();
+    // Get the current level name
+    std::string getLevelName();
+    // Get the current gravity field strength
+    float getGravityStrength();
 };

@@ -1,0 +1,17 @@
+// Example level (level_0)
+nextLevelName, level_1
+// Bottom colliders
+StaticCollider, 3, 25, 6, 2
+StaticCollider, 9, 27, 10, 2
+StaticCollider, 19, 25, 6, 2
+// Vertical colliders
+StaticCollider, 0, 0, 2, 25
+StaticCollider, 25, 0, 2, 19
+// Extra blocks
+StaticCollider, 23, 29, 44, 19
+// Spike
+Spike, 28, 28
+// Static deadly section
+StaticDeadly, 33, 28, 5, 2
+// Ending teleporter
+LevelTp, 55, 28

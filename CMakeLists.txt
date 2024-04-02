@@ -11,8 +11,10 @@ FetchContent_Declare(SFML
 FetchContent_MakeAvailable(SFML)
 
 # Add all source files
+# TODO: glob?
 add_executable(PlatScifi
     src/main.cpp
+    src/constants.h
     src/renderdata.h
     src/worldobject.cpp
     src/worldobject.h
@@ -22,9 +24,20 @@ add_executable(PlatScifi
     src/renderer.h
     src/worldstate.cpp
     src/worldstate.h
+    src/gamestate.cpp
+    src/gamestate.h
+    src/worldspawner.cpp
+    src/worldspawner.h
+    src/worldobjectincludes.h
     src/worldobjects/redcube.h
     src/worldobjects/bluecube.h
     src/worldobjects/stationaryimage.h
+    src/worldobjects/player.h
+    src/worldobjects/staticcollider.h
+    src/worldobjects/movingcollider.h
+    src/worldobjects/staticdeadly.h
+    src/worldobjects/leveltp.h
+    src/worldobjects/spike.h
 )
 target_link_libraries(PlatScifi PRIVATE sfml-graphics)
 target_compile_features(PlatScifi PRIVATE cxx_std_17)
@@ -40,9 +53,17 @@ endif()
 install(TARGETS PlatScifi)
 
 # Copy over the assets folder
+# TODO: use a GLOB
 set(ASSETS
     essential.txt
     tiv_logo.png
+    grass1.png
+    yellowpad.png
+    spike.png
+    level_0.csv
+    level_1.csv
+    level_2.csv
+    level_design.csv
 )
 
 foreach(ASSET ${ASSETS})

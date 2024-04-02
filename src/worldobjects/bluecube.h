@@ -9,10 +9,14 @@ private:
     double vely = 0.15;
 
 public:
-    BlueCube() : WorldObject() {}
+    BlueCube(double spawnx, double spawny) : WorldObject() {
+        locx = spawnx;
+        locy = spawny;
+        objectAttributes.insert(ObjectAttribute::Collision);
+    }
     
     // Override the update function
-    UpdateResult update() {
+    UpdateResult update(WorldState& worldState, std::vector<WorldObject*>& objects) {
         locx += velx;
         if (locx > 64 || locx < 0) velx *= -1;
         locy += vely;

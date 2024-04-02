@@ -1,13 +1,24 @@
 #pragma once
 
 #include <vector>
+#include <set>
 #include "renderdata.h"
-//#include "worldstate.h"
+#include "worldstate.h"
 
 // The result of an update function
 enum class UpdateResult {
     None,
-    Destroy
+    Destroy,
+    NextLevel // TODO: better naming
+};
+
+// The attributes that an object can have
+enum class ObjectAttribute {
+    OverlapDetect,
+    Collision,
+    Deadly,
+    LevelTeleport,
+    Persist // Persist across levels
 };
 
 // Stores a world object
@@ -18,18 +29,26 @@ protected:
     double locy;
     double width;
     double height;
+    std::set<ObjectAttribute> objectAttributes;
 
 public:
     // Create the WorldObject
     WorldObject();
 
     // Update each frame
-    virtual UpdateResult update(/*WorldState& worldState*/);
+    virtual UpdateResult update(WorldState& worldState, std::vector<WorldObject*>& objects);
 
-    // TODO: delete this function
-    /*void tester(std::vector<WorldObject*>& v) {
-        // Do stuff with v
-    }*/
+    // Get whether a point is inside of this object
+    double isPointInside(double x, double y);
+
+    double getLocx();
+    double getLocy();
+    double getWidth();
+    double getHeight();
+
+    bool hasAttribute(ObjectAttribute attribute);
+
+    // TODO: get whether a rectangle is inside of this object
 
     // Return the results to render
     virtual RenderData getRenderData();

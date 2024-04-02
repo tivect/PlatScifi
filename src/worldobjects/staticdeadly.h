@@ -2,27 +2,28 @@
 
 #include "../worldobject.h"
 
-// Stores a red cube for debugging purposes
-class RedCube : public WorldObject {
+// An object that does not move, but that other objects can collide with
+// (deadly to player)
+class StaticDeadly : public WorldObject {
 public:
     // Constructor
-    RedCube(double spawnx, double spawny) : WorldObject() {
+    StaticDeadly(double spawnx, double spawny, double width, double height) : WorldObject() {
         locx = spawnx;
         locy = spawny;
+        this->width = width;
+        this->height = height;
+        objectAttributes.insert(ObjectAttribute::Collision);
+	objectAttributes.insert(ObjectAttribute::Deadly);
     }
 
-    // Override update: move right over time
+    // Override update
     UpdateResult update(WorldState& worldState, std::vector<WorldObject*>& objects) {
-        locx += 0.1;
-        if (locx > 30) {
-            locy += 1;
-            locx = 0;
-        }
         return UpdateResult::None;
     }
 
     // Override rendering
     RenderData getRenderData() {
+        // TODO: image?
         return {
             RenderType::Rectangle,
             coordType,
@@ -30,7 +31,7 @@ public:
             locy,
             width,
             height,
-            { 255, 0, 0 },
+            { 207, 12, 19 },
             ""
         };
     }

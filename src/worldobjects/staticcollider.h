@@ -2,28 +2,26 @@
 
 #include "../worldobject.h"
 
-// Stores a stationary image at a point in space
-class StationaryImage : public WorldObject {
-private:
-    std::string filename;
-
+// An object that does not move, but that other objects can collide with
+class StaticCollider : public WorldObject {
 public:
-    // Constructor: provide the name of the asset from assets (ex. "assets/tiv_logo.png")
-    StationaryImage(double spawnx, double spawny, double width, double height, std::string filename) : WorldObject() {
+    // Constructor
+    StaticCollider(double spawnx, double spawny, double width, double height) : WorldObject() {
         locx = spawnx;
         locy = spawny;
         this->width = width;
         this->height = height;
-        this->filename = filename;
+        objectAttributes.insert(ObjectAttribute::Collision);
     }
 
-    // Override update: do nothing
+    // Override update: gravity
     UpdateResult update(WorldState& worldState, std::vector<WorldObject*>& objects) {
         return UpdateResult::None;
     }
 
     // Override rendering
     RenderData getRenderData() {
+        // TODO: image/animations
         return {
             RenderType::Image,
             coordType,
@@ -31,8 +29,8 @@ public:
             locy,
             width,
             height,
-            { 255, 0, 0 },
-            filename
+            { 14, 92, 81 },
+            "assets/grass1.png"
         };
     }
 };
