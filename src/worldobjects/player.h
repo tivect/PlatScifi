@@ -56,9 +56,10 @@ public:
         locy += vely;
         // Check collision and update
         onGround = false;
-        // todo: refactor
-        // todo: only check with types enabling collision
-        // todo: when hitting multiple?
+        // TODO: refactor
+        // TODO: only check with types enabling collision
+        // TODO: polygonal collisions
+        // TODO: when hitting multiple?
         // TODO: impart velocity on collisions (ex. moving platforms)
         for (WorldObject* object : objects) {
             if (object == this) continue;
