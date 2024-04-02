@@ -34,6 +34,7 @@ add_executable(PlatScifi
     src/worldobjects/stationaryimage.h
     src/worldobjects/player.h
     src/worldobjects/staticcollider.h
+    src/worldobjects/movingcollider.h
     src/worldobjects/staticdeadly.h
     src/worldobjects/leveltp.h
     src/worldobjects/spike.h
@@ -52,12 +53,17 @@ endif()
 install(TARGETS PlatScifi)
 
 # Copy over the assets folder
+# TODO: use a GLOB
 set(ASSETS
     essential.txt
     tiv_logo.png
     grass1.png
+    yellowpad.png
     spike.png
     level_0.csv
+    level_1.csv
+    level_2.csv
+    level_design.csv
 )
 
 foreach(ASSET ${ASSETS})

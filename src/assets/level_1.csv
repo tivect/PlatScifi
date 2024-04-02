@@ -2,7 +2,7 @@
 nextLevelName, level_2
 // Bottom colliders
 StaticCollider, 3, 25, 6, 2
-StaticCollider, 9, 27, 10, 2
+//StaticCollider, 9, 27, 10, 2
 StaticCollider, 19, 25, 6, 2
 // Vertical colliders
 StaticCollider, 0, 0, 2, 25
@@ -15,3 +15,5 @@ Spike, 28, 28
 StaticDeadly, 33, 28, 5, 2
 // Ending teleporter
 LevelTp, 55, 28
+// Moving Platform
+MovingCollider, 8, 32, 5, 2, 300, 20, 32

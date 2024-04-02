@@ -8,3 +8,4 @@
 #include "worldobjects/spike.h"
 #include "worldobjects/staticdeadly.h"
 #include "worldobjects/leveltp.h"
+#include "worldobjects/movingcollider.h"

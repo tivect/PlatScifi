@@ -59,6 +59,7 @@ public:
         // todo: refactor
         // todo: only check with types enabling collision
         // todo: when hitting multiple?
+        // TODO: impart velocity on collisions (ex. moving platforms)
         for (WorldObject* object : objects) {
             if (object == this) continue;
             bool collided = false;
