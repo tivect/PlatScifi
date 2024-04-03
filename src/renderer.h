@@ -26,5 +26,5 @@ public:
     void setCamera(double newWorldCameraCenterX, double newWorldCameraCenterY, double percentEasing = 0.0);
 
     // Render the entire world
-    void renderWorldObjects(GameState& worldState);
+    void renderWorld(GameState& worldState);
 };

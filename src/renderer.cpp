@@ -73,9 +73,13 @@ void Renderer::setCamera(double newWorldCameraCenterX, double newWorldCameraCent
     worldCameraCenterY = worldCameraCenterY * percentEasing + newWorldCameraCenterY * (1 - percentEasing);
 }
 
-void Renderer::renderWorldObjects(GameState& gameState) {
-    // todo: fix on mac/linux
+void Renderer::renderWorld(GameState& gameState) {
+	// Clear/render sky
+	window.clear(sf::Color(111, 201, 252));
+	// Render world objects
     for (std::vector<WorldObject*>::iterator it = gameState.objectsBegin(); it != gameState.objectsEnd(); it++) {
         renderFromData((*it)->getRenderData());
     }
+	// TODO: Render UI
+	
 }

@@ -67,7 +67,7 @@ public:
 	        bool overlapped = false;
             if (object->hasAttribute(ObjectAttribute::Collision)) {
                 // X movement pushout
-                // todo: better way of doing the 0.1 thing
+                // todo: better way of doing the 0.1 thing (subtract velocity instead?)
                 if (locy + height - 0.1 >= object->getLocy() && locy + 0.1 < object->getLocy() + object->getHeight()) {
                     // Within the y
                     if (locx + width > object->getLocx() && locx < object->getLocx() + object->getWidth()) {
@@ -81,13 +81,26 @@ public:
                 if (locx + width >= object->getLocx() && locx < object->getLocx() + object->getWidth()) {
                     // Within the x
                     if (locy + height > object->getLocy() && locy < object->getLocy() + object->getHeight()) {
-                        // Floor/ceiling
-                        locy -= vely;
-                        vely = 0;
-                        collided = true;
-			            overlapped = true;
-                        // todo: should not be on ground on a bottom corner
-                        onGround = true;
+						if (locy > object->getLocy() + object->getHeight() / 2.0) {
+							// Ceiling
+							if (vely >= 0) {
+								// Already traveling down: do nothing
+							} else {
+								// Traveling up: stop
+								locy -= vely;
+								vely = 0;
+							}
+							collided = true;
+							overlapped = true;
+						} else {
+							// Floor
+							locy -= vely;
+							vely = 0;
+							collided = true;
+							overlapped = true;
+							// todo: should not be on ground on a bottom corner
+							onGround = true;
+						}
                     }
                 }
             }

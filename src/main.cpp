@@ -13,6 +13,7 @@
 // Entry point
 int main() {
     auto window = sf::RenderWindow{ { 1920u, 1080u }, "PlatScifi" };
+    // TODO: better framerate limit ?
     window.setFramerateLimit(144);
 
     // TODO: build not working on Linux?
@@ -84,11 +85,11 @@ int main() {
             keysPressed.erase(sf::Keyboard::P);
         }
 
+	// Update the game and world
         if (LEVEL_DESIGN_MODE) {
             // Level Design Mode: keep reloading the world without updating it
             worldSpawner.spawnWorld(gameState, gameState.getLevelName());
         }
-        // Update the game and world
         UpdateResult updateResult = gameState.update();
         if (updateResult == UpdateResult::NextLevel) {
             // Load the next level, if possible
@@ -96,10 +97,12 @@ int main() {
             worldSpawner.spawnWorld(gameState, gameState.getNextLevelName());
         }
 
+	// Render
+	window.clear(sf::Color(0, 0, 0));
         // Render the game and world
-        window.clear(sf::Color(111, 201, 252));
         renderer.setCamera(player->getLocx(), player->getLocy(), 0.8);
-        renderer.renderWorldObjects(gameState);
+        renderer.renderWorld(gameState);
+	// Update
         window.display();
     }
 }
