@@ -68,6 +68,16 @@ void Renderer::renderFromData(RenderData data) {
     }
 }
 
+void Renderer::renderMessage(UIMessage& uiMessage, int locx, int locy) {
+    sf::Text text;
+    text.setFont(assetHandler.getMainFont());
+    text.setString(uiMessage.message);
+    text.setCharacterSize(uiMessage.fontSize);
+    text.setFillColor(sf::Color(uiMessage.color.r, uiMessage.color.g, uiMessage.color.b));
+    text.setPosition(locx, locy);
+    window.draw(text);
+}
+
 void Renderer::setCamera(double newWorldCameraCenterX, double newWorldCameraCenterY, double percentEasing) {
     worldCameraCenterX = worldCameraCenterX * percentEasing + newWorldCameraCenterX * (1 - percentEasing);
     worldCameraCenterY = worldCameraCenterY * percentEasing + newWorldCameraCenterY * (1 - percentEasing);
@@ -77,16 +87,18 @@ void Renderer::renderWorld(GameState& gameState) {
 	// Clear/render sky
 	window.clear(sf::Color(111, 201, 252));
 	// Render world objects
-    for (std::vector<WorldObject*>::iterator it = gameState.objectsBegin(); it != gameState.objectsEnd(); it++) {
-        renderFromData((*it)->getRenderData());
+    for (WorldObject* object : gameState.objects) {
+        renderFromData(object->getRenderData());
     }
+
 	// TODO: render on-screen debug messages (ex. "enemy_fipa spawned")
-	// TODO: refactor/abstract this
-	sf::Text levelName;
-	levelName.setFont(assetHandler.getMainFont());
-	levelName.setString(gameState.getLevelName()); // TODO: use display name instead
-	levelName.setCharacterSize(10);
-	levelName.setFillColor(sf::Color::White);
-	levelName.setPosition(24, 24);
-	window.draw(levelName);
+    // Render UI messages
+    int level = 0;
+    for (int i = gameState.uiMessages.size() - 1; i >= 0; i--) {
+        renderMessage(gameState.uiMessages[i], 24, 24 + level * 20);
+        level++;
+    }
+    // Render other UI
+    UIMessage levelName = { gameState.getLevelName(), { 255, 255, 255 }, 24 };
+    renderMessage(levelName, window.getSize().x - 140, 18);
 }

@@ -5,11 +5,24 @@ void GameState::spawnObject(WorldObject* object) {
 }
 
 UpdateResult GameState::update() {
+    // Update world objects
     for (WorldObject* object : objects) {
         UpdateResult updateResult = object->update(worldState, objects);
         if (updateResult == UpdateResult::NextLevel) {
             // TODO: improve this
             return UpdateResult::NextLevel;
+        } else if (updateResult == UpdateResult::DieReset) {
+            // Died
+            return UpdateResult::DieReset;
+        }
+    }
+    // Update UI messages
+    for (std::vector<UIMessage>::iterator it = uiMessages.begin(); it != uiMessages.end();) {
+        if (it->update()) {
+            // Delete the message
+            it = uiMessages.erase(it);
+        } else {
+            it++;
         }
     }
     return UpdateResult::None;
@@ -26,14 +39,18 @@ std::string GameState::getNextLevelName() {
 void GameState::updateLevelNames(std::string newLevelName, std::string newNextLevelName) {
     levelName = newLevelName;
     nextLevelName = newNextLevelName;
+    // Add the message
+    // TODO: use level display names
+    addUIMessage("Teleported to " + newLevelName, { 255, 255, 255 });
 }
 
-std::vector<WorldObject*>::iterator GameState::objectsBegin() {
-    return objects.begin();
-}
-
-std::vector<WorldObject*>::iterator GameState::objectsEnd() {
-    return objects.end();
+void GameState::addUIMessage(std::string message, Color color, int fontSize, long durationFrames) {
+    uiMessages.push_back({
+        message,
+        color,
+        fontSize,
+        durationFrames
+    });
 }
 
 void GameState::clear() {

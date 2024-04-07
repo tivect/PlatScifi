@@ -22,6 +22,9 @@ public:
     // Render from a RenderData object
     void renderFromData(RenderData data);
 
+    // Render a message
+    void renderMessage(UIMessage& message, int locx, int locy);
+
     // Set the camera
     void setCamera(double newWorldCameraCenterX, double newWorldCameraCenterY, double percentEasing = 0.0);
 

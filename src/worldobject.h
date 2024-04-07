@@ -9,6 +9,7 @@
 enum class UpdateResult {
     None,
     Destroy,
+    DieReset,
     NextLevel // TODO: better naming
 };
 

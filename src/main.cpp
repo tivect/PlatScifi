@@ -84,9 +84,10 @@ int main() {
             // Debug: spawn blue cubes
             gameState.spawnObject(new BlueCube(player->getLocx(), player->getLocy()));
             keysPressed.erase(sf::Keyboard::P);
+            gameState.addUIMessage("Player spawned a debug blue cube", { 0, 0, 255 });
         }
 
-	// Update the game and world
+        // Update the game and world
         if (LEVEL_DESIGN_MODE) {
             // Level Design Mode: keep reloading the world without updating it
             worldSpawner.spawnWorld(gameState, gameState.getLevelName());
@@ -96,6 +97,10 @@ int main() {
             // Load the next level, if possible
             // TODO: impl better
             worldSpawner.spawnWorld(gameState, gameState.getNextLevelName());
+        } else if (updateResult == UpdateResult::DieReset) {
+            // Died: re-load the same level
+            worldSpawner.spawnWorld(gameState, gameState.getLevelName());
+            gameState.addUIMessage("Death #" + std::to_string(player->getDeathCounter()), { 255, 0, 0 });
         }
 
 	// Render
@@ -103,7 +108,7 @@ int main() {
         // Game and world
         renderer.setCamera(player->getLocx(), player->getLocy(), 0.8);
         renderer.renderWorld(gameState);
-	// Update
+        // Update
         window.display();
     }
 }

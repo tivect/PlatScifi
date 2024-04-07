@@ -9,6 +9,7 @@ private:
     double velx = 0;
     double vely = 0;
     bool onGround = false;
+    int deathCounter = 0;
 
 public:
     // Constructor
@@ -39,6 +40,19 @@ public:
         return locy;
     }
 
+    int getDeathCounter() {
+        return deathCounter;
+    }
+
+    void die() {
+        deathCounter++;
+        // Reset position and physics
+        teleport(5, 10);
+        velx = 0;
+        vely = 0;
+        onGround = false;
+    }
+
     void teleport(double locx, double locy) {
         this->locx = locx;
         this->locy = locy;
@@ -54,6 +68,7 @@ public:
         locx += velx;
         locy += vely;
         // Check collision and update
+        UpdateResult updateResultToReturn = UpdateResult::None;
         onGround = false;
         // TODO: refactor
         // TODO: only check with types enabling collision
@@ -115,8 +130,8 @@ public:
             // Collision stuff
             if (collided && object->hasAttribute(ObjectAttribute::Deadly)) {
                 // Die
-                // todo: impl
-                teleport(5, 10);
+                die();
+                updateResultToReturn = UpdateResult::DieReset; 
             }
             if (overlapped && object->hasAttribute(ObjectAttribute::LevelTeleport)) {
                 // Teleport to the next level
@@ -125,8 +140,8 @@ public:
                 return UpdateResult::NextLevel;
             }
         }
-		// TODO: out of bounds respawn/death
-        return UpdateResult::None;
+		// TODO: out of bounds respawn/death (and restart level/message on die)
+        return updateResultToReturn;
     }
 
     // Override rendering
