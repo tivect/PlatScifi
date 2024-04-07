@@ -59,6 +59,7 @@ int main() {
         }
 
         // Use input
+        bool resetPlayer = false;
         if (keysPressed.find(sf::Keyboard::A) != keysPressed.end()) {
             player->accelerate(-0.05, 0);
         }
@@ -76,9 +77,10 @@ int main() {
             player->accelerate(0, 0.05);
         }
         if (keysPressed.find(sf::Keyboard::R) != keysPressed.end()) {
-            // Restart to spawn location
-			// TODO: also restart level ?
-            player->teleport(5.0, 10.0);
+            // Restart to spawn location (counts as a death)
+            player->die();
+            resetPlayer = true;
+            keysPressed.erase(sf::Keyboard::R);
         }
         if (keysPressed.find(sf::Keyboard::P) != keysPressed.end()) {
             // Debug: spawn blue cubes
@@ -93,6 +95,7 @@ int main() {
             worldSpawner.spawnWorld(gameState, gameState.getLevelName());
         }
         UpdateResult updateResult = gameState.update();
+        if (resetPlayer) updateResult = UpdateResult::DieReset;
         if (updateResult == UpdateResult::NextLevel) {
             // Load the next level, if possible
             // TODO: impl better

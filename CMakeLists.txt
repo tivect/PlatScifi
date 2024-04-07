@@ -69,6 +69,9 @@ set(ASSETS
 	enemy_bird_0.png
 	enemy_bird_1.png
     enemy_fipa_0.png
+    enemy_replicator_0.png
+    enemy_replicator_1.png
+    enemy_replicator_2.png
 )
 
 foreach(ASSET ${ASSETS})

@@ -117,8 +117,7 @@ public:
 						}
                     }
                 }
-            }
-            if (object->hasAttribute(ObjectAttribute::OverlapDetect)) {
+            } else if (object->hasAttribute(ObjectAttribute::OverlapDetect)) {
                 // Check overlap only
                 if (locy + height >= object->getLocy() && locy < object->getLocy() + object->getHeight()) {
                     if (locx + width > object->getLocx() && locx < object->getLocx() + object->getWidth()) {
@@ -128,7 +127,7 @@ public:
                 }
             }
             // Collision stuff
-            if (collided && object->hasAttribute(ObjectAttribute::Deadly)) {
+            if (overlapped && object->hasAttribute(ObjectAttribute::Deadly)) {
                 // Die
                 die();
                 updateResultToReturn = UpdateResult::DieReset; 

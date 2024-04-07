@@ -10,7 +10,8 @@ enum class UpdateResult {
     None,
     Destroy,
     DieReset,
-    NextLevel // TODO: better naming
+    NextLevel, // TODO: better naming
+    ReplicateAndDestroy,
 };
 
 // The attributes that an object can have

@@ -9,6 +9,7 @@
 struct AnimalData {
     std::string displayName;
     std::string texturePrefix;
+    double textureScale;
     int animFrameMax;
     double width;
     double height;
@@ -23,9 +24,11 @@ private:
     bool onGround = false;
     long frameCount = 0;
     std::string texturePrefix;
+    double textureScale = 1.0;
 	int animFrameNum = 0;
 	int animFrameMax = 1;
     bool moveRight = false;
+    std::string name = "unnamed";
 
 public:
     // Define the default data for all named animals (<name, data>)
@@ -50,9 +53,11 @@ public:
             // Could not find the animal
             name = "bird";
         }
+        this->name = name;
         width = (*animalDefaults.find(name)).second.width;
         height = (*animalDefaults.find(name)).second.height;
         this->texturePrefix = (*animalDefaults.find(name)).second.texturePrefix;
+        this->textureScale = (*animalDefaults.find(name)).second.textureScale;
         this->animFrameMax = (*animalDefaults.find(name)).second.animFrameMax;
         objectAttributes = (*animalDefaults.find(name)).second.objectAttributes;
     }
@@ -85,11 +90,35 @@ public:
         this->locy = locy;
     }
 
+    void reverseDirection() {
+        moveRight = !moveRight;
+    }
+
+    void setDimensions(double newWidth, double newHeight) {
+        this->width = newWidth;
+        this->height = newHeight;
+    }
+
     // Override update: gravity and acceleration, and AI logic
     UpdateResult update(WorldState& worldState, std::vector<WorldObject*>& objects) {
 		// AI Logic
+        UpdateResult updateResultToReturn = UpdateResult::None;
 		accelerate(moveRight ? 0.01 : -0.01, 0);
 		jump();
+        // Special named animal abilities
+        // TODO: change from stringly typed?
+        if (name == "replicator") {
+            // Replicate after 300 frames
+            if (frameCount >= 300) {
+                // Replicate
+                updateResultToReturn = UpdateResult::ReplicateAndDestroy;
+            } else if (frameCount >= 293) {
+                animFrameNum = 2;
+            } else if (frameCount >= 285) {
+                animFrameNum = 1;
+            }
+        }
+
 		// Physics
         if (!LEVEL_DESIGN_MODE) {
             vely += worldState.getGravityStrength();
@@ -146,8 +175,7 @@ public:
 						}
                     }
                 }
-            }
-            if (object->hasAttribute(ObjectAttribute::OverlapDetect)) {
+            } else if (object->hasAttribute(ObjectAttribute::OverlapDetect)) {
                 // Check overlap only
                 if (locy + height >= object->getLocy() && locy < object->getLocy() + object->getHeight()) {
                     if (locx + width > object->getLocx() && locx < object->getLocx() + object->getWidth()) {
@@ -158,7 +186,7 @@ public:
             }
         }
 		// TODO: out of bounds respawn/death
-        return UpdateResult::None;
+        return updateResultToReturn;
     }
 
     // Override rendering
@@ -171,10 +199,10 @@ public:
         return {
             RenderType::Image,
             coordType,
-            locx,
-            locy,
-            width,
-            height,
+            locx - width * ((textureScale - 1.0) / 2.0),
+            locy - height * ((textureScale - 1.0) / 2.0),
+            width * textureScale,
+            height * textureScale,
             { 255, 0, 0 },
             "assets/" + texturePrefix + "_" + std::to_string(animFrameNum) + ".png"
         };

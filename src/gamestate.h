@@ -2,6 +2,7 @@
 
 #include <vector>
 #include "worldobject.h"
+#include "worldobjectincludes.h"
 #include "worldstate.h"
 #include "uimessage.h"
 

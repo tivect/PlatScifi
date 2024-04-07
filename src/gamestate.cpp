@@ -6,16 +6,38 @@ void GameState::spawnObject(WorldObject* object) {
 
 UpdateResult GameState::update() {
     // Update world objects
-    for (WorldObject* object : objects) {
-        UpdateResult updateResult = object->update(worldState, objects);
+    std::vector<WorldObject*> newToSpawn;
+    for (std::vector<WorldObject*>::iterator it = objects.begin(); it != objects.end();) {
+        UpdateResult updateResult = (*it)->update(worldState, objects);
         if (updateResult == UpdateResult::NextLevel) {
             // TODO: improve this
             return UpdateResult::NextLevel;
         } else if (updateResult == UpdateResult::DieReset) {
-            // Died
+            // Player died
             return UpdateResult::DieReset;
+        } else if (updateResult == UpdateResult::ReplicateAndDestroy) {
+            // Replicate it (spawn two replicators)
+            Animal* animal1 = new Animal(
+                "replicator", (*it)->getLocx(), (*it)->getLocy()
+            );
+            animal1->teleport(animal1->getLocx() - 0.7, animal1->getLocy());
+            animal1->setDimensions((*it)->getWidth() * 0.8, (*it)->getHeight() * 0.8);
+            newToSpawn.push_back(animal1);
+            Animal* animal2 = new Animal(
+                "replicator", (*it)->getLocx(), (*it)->getLocy()
+            );
+            animal2->teleport(animal2->getLocx() + 0.7, animal2->getLocy());
+            animal2->setDimensions((*it)->getWidth() * 0.8, (*it)->getHeight() * 0.8);
+            animal2->reverseDirection();
+            newToSpawn.push_back(animal2);
+            // Destroy the previous enemy
+            it = objects.erase(it);
+        } else {
+            // Move on
+            it++;
         }
     }
+    for (WorldObject* newObject : newToSpawn) objects.push_back(newObject);
     // Update UI messages
     for (std::vector<UIMessage>::iterator it = uiMessages.begin(); it != uiMessages.end();) {
         if (it->update()) {
