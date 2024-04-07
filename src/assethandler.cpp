@@ -1,4 +1,6 @@
 #include "assethandler.h"
+#include <iostream> // DEBUGGING
+					// ONLY
 
 sf::Image AssetHandler::getImage(std::string path) {
     // Return if image already exists
@@ -13,4 +15,17 @@ sf::Image AssetHandler::getImage(std::string path) {
     }
     images[path] = img;
     return img;
+}
+
+// Get a reference to the font, not a copy
+sf::Font& AssetHandler::getMainFont() {
+	if (mainFontLoaded) return mainFont;
+    if (!mainFont.loadFromFile("assets/LiberationSans-Regular.ttf")) {
+        // Error
+		std::cout << "ERR: Failed to load 'assets/LiberationSans-Regular.ttf'" << std::endl;
+		// TODO: handle
+    }
+	std::cout << "Main font loaded" << std::endl;
+    mainFontLoaded = true;
+    return mainFont;
 }

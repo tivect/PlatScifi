@@ -9,3 +9,4 @@
 #include "worldobjects/staticdeadly.h"
 #include "worldobjects/leveltp.h"
 #include "worldobjects/movingcollider.h"
+#include "worldobjects/animal.h"

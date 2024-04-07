@@ -63,7 +63,12 @@ void WorldSpawner::spawnWorld(GameState& gameState, std::string levelName) {
                     std::stoi(parsed[4]), std::stol(parsed[5]), std::stoi(parsed[6]),
                     std::stoi(parsed[7])
                 ));
-            }
+            } else if (parsed[0] == "Animal") {
+				if (parsed.size() < 3) throw;
+				gameState.spawnObject(new Animal(
+					std::stoi(parsed[1]), std::stoi(parsed[2])
+				));
+			}
         }
     } catch (std::exception& e) {
         // Failed: re-clear the world

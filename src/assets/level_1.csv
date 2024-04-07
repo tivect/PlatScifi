@@ -17,3 +17,5 @@ StaticDeadly, 33, 28, 5, 2
 LevelTp, 55, 28
 // Moving Platform
 MovingCollider, 8, 32, 5, 2, 300, 20, 32
+// Animal
+Animal, 50, 15

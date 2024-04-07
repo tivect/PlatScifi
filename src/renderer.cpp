@@ -81,5 +81,12 @@ void Renderer::renderWorld(GameState& gameState) {
         renderFromData((*it)->getRenderData());
     }
 	// TODO: Render UI
-	
+	// TODO: refactor/abstract this
+	sf::Text levelName;
+	levelName.setFont(assetHandler.getMainFont());
+	levelName.setString(gameState.getLevelName()); // TODO: use display name instead
+	levelName.setCharacterSize(10);
+	levelName.setFillColor(sf::Color::White);
+	levelName.setPosition(24, 24);
+	window.draw(levelName);
 }

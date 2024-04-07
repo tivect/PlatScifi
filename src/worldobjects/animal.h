@@ -3,20 +3,27 @@
 #include "../worldobject.h"
 #include "../constants.h"
 
-// The data for the player
-class Player : public WorldObject {
+// The data for an animal in the world
+class Animal : public WorldObject {
 private:
     double velx = 0;
     double vely = 0;
     bool onGround = false;
+    long frameCount = 0;
+	int animFrameNum = 0;
+	int animFrameMax = 1;
 
 public:
     // Constructor
-    Player(double spawnx, double spawny) : WorldObject() {
+    Animal(double spawnx, double spawny) : WorldObject() {
         locx = spawnx;
         locy = spawny;
-        objectAttributes.insert(ObjectAttribute::Persist);
+		width = 2.0;
+		height = 2.0;
+		objectAttributes.insert(ObjectAttribute::Collision);
     }
+
+	// TODO: different AI based on animal type (enum? stringly typed?)
 
     // Input: acceleration
     void accelerate(double deltax, double deltay) {
@@ -44,8 +51,12 @@ public:
         this->locy = locy;
     }
 
-    // Override update: gravity and acceleration
+    // Override update: gravity and acceleration, and AI logic
     UpdateResult update(WorldState& worldState, std::vector<WorldObject*>& objects) {
+		// AI Logic
+		accelerate(-0.01, 0);
+		jump();
+		// Physics
         if (!LEVEL_DESIGN_MODE) {
             vely += worldState.getGravityStrength();
         }
@@ -56,10 +67,7 @@ public:
         // Check collision and update
         onGround = false;
         // TODO: refactor
-        // TODO: only check with types enabling collision
-        // TODO: polygonal collisions
-        // TODO: when hitting multiple?
-        // TODO: impart velocity on collisions (ex. moving platforms)
+        // TODO: update all collisions from player
         for (WorldObject* object : objects) {
             if (object == this) continue;
             bool collided = false;
@@ -112,18 +120,6 @@ public:
                     }
                 }
             }
-            // Collision stuff
-            if (collided && object->hasAttribute(ObjectAttribute::Deadly)) {
-                // Die
-                // todo: impl
-                teleport(5, 10);
-            }
-            if (overlapped && object->hasAttribute(ObjectAttribute::LevelTeleport)) {
-                // Teleport to the next level
-                // TODO: impl better
-                teleport(5, 10);
-                return UpdateResult::NextLevel;
-            }
         }
 		// TODO: out of bounds respawn/death
         return UpdateResult::None;
@@ -131,16 +127,20 @@ public:
 
     // Override rendering
     RenderData getRenderData() {
-        // TODO: image/animations
+		frameCount++;
+		if (frameCount % 10 == 0) {
+			animFrameNum++;
+			if (animFrameNum > animFrameMax) animFrameNum = 0;
+		}
         return {
-            RenderType::Rectangle,
+            RenderType::Image,
             coordType,
             locx,
             locy,
             width,
             height,
-            { 0, 255, 0 },
-            ""
+            { 255, 0, 0 },
+            "assets/enemy_bird_" + std::to_string(animFrameNum) + ".png"
         };
     }
 };

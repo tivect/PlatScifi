@@ -77,6 +77,7 @@ int main() {
         }
         if (keysPressed.find(sf::Keyboard::R) != keysPressed.end()) {
             // Restart to spawn location
+			// TODO: also restart level ?
             player->teleport(5.0, 10.0);
         }
         if (keysPressed.find(sf::Keyboard::P) != keysPressed.end()) {
@@ -99,7 +100,7 @@ int main() {
 
 	// Render
 	window.clear(sf::Color(0, 0, 0));
-        // Render the game and world
+        // Game and world
         renderer.setCamera(player->getLocx(), player->getLocy(), 0.8);
         renderer.renderWorld(gameState);
 	// Update
