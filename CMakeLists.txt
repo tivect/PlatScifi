@@ -38,6 +38,7 @@ add_executable(PlatScifi
     src/worldobjects/staticdeadly.h
     src/worldobjects/leveltp.h
     src/worldobjects/spike.h
+    src/worldobjects/animal.cpp
 )
 target_link_libraries(PlatScifi PRIVATE sfml-graphics)
 target_compile_features(PlatScifi PRIVATE cxx_std_17)
@@ -67,6 +68,7 @@ set(ASSETS
 	LiberationSans-Regular.ttf
 	enemy_bird_0.png
 	enemy_bird_1.png
+    enemy_fipa_0.png
 )
 
 foreach(ASSET ${ASSETS})

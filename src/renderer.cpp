@@ -80,7 +80,7 @@ void Renderer::renderWorld(GameState& gameState) {
     for (std::vector<WorldObject*>::iterator it = gameState.objectsBegin(); it != gameState.objectsEnd(); it++) {
         renderFromData((*it)->getRenderData());
     }
-	// TODO: Render UI
+	// TODO: render on-screen debug messages (ex. "enemy_fipa spawned")
 	// TODO: refactor/abstract this
 	sf::Text levelName;
 	levelName.setFont(assetHandler.getMainFont());

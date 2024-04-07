@@ -1,7 +1,19 @@
 #pragma once
 
+#include <map>
+#include <vector>
 #include "../worldobject.h"
 #include "../constants.h"
+
+// The default data for a specific animal type
+struct AnimalData {
+    std::string displayName;
+    std::string texturePrefix;
+    int animFrameMax;
+    double width;
+    double height;
+    std::set<ObjectAttribute> objectAttributes;
+};
 
 // The data for an animal in the world
 class Animal : public WorldObject {
@@ -10,17 +22,39 @@ private:
     double vely = 0;
     bool onGround = false;
     long frameCount = 0;
+    std::string texturePrefix;
 	int animFrameNum = 0;
 	int animFrameMax = 1;
+    bool moveRight = false;
 
 public:
-    // Constructor
-    Animal(double spawnx, double spawny) : WorldObject() {
+    // Define the default data for all named animals (<name, data>)
+    static const std::map<std::string, AnimalData> animalDefaults;
+
+    // Constructor (define everything specifically)
+    Animal(std::string texturePrefix, int animFrameMax, double spawnx, double spawny) : WorldObject() {
         locx = spawnx;
         locy = spawny;
 		width = 2.0;
 		height = 2.0;
+        this->texturePrefix = texturePrefix;
+        this->animFrameMax = animFrameMax;
 		objectAttributes.insert(ObjectAttribute::Collision);
+    }
+
+    // Constructor for named animals
+    Animal(std::string name, double spawnx, double spawny) : WorldObject() {
+        locx = spawnx;
+        locy = spawny;
+        if (animalDefaults.find(name) == animalDefaults.end()) {
+            // Could not find the animal
+            name = "bird";
+        }
+        width = (*animalDefaults.find(name)).second.width;
+        height = (*animalDefaults.find(name)).second.height;
+        this->texturePrefix = (*animalDefaults.find(name)).second.texturePrefix;
+        this->animFrameMax = (*animalDefaults.find(name)).second.animFrameMax;
+        objectAttributes = (*animalDefaults.find(name)).second.objectAttributes;
     }
 
 	// TODO: different AI based on animal type (enum? stringly typed?)
@@ -54,7 +88,7 @@ public:
     // Override update: gravity and acceleration, and AI logic
     UpdateResult update(WorldState& worldState, std::vector<WorldObject*>& objects) {
 		// AI Logic
-		accelerate(-0.01, 0);
+		accelerate(moveRight ? 0.01 : -0.01, 0);
 		jump();
 		// Physics
         if (!LEVEL_DESIGN_MODE) {
@@ -83,6 +117,8 @@ public:
                         velx = 0;
                         collided = true;
 			            overlapped = true;
+                        // For AI
+                        moveRight = !moveRight;
                     }
                 }
                 if (locx + width >= object->getLocx() && locx < object->getLocx() + object->getWidth()) {
@@ -140,7 +176,7 @@ public:
             width,
             height,
             { 255, 0, 0 },
-            "assets/enemy_bird_" + std::to_string(animFrameNum) + ".png"
+            "assets/" + texturePrefix + "_" + std::to_string(animFrameNum) + ".png"
         };
     }
 };

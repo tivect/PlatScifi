@@ -1,3 +1,4 @@
+#include <iostream>
 #include "worldspawner.h"
 
 void WorldSpawner::spawnWorld(GameState& gameState, std::string levelName) {
@@ -64,14 +65,23 @@ void WorldSpawner::spawnWorld(GameState& gameState, std::string levelName) {
                     std::stoi(parsed[7])
                 ));
             } else if (parsed[0] == "Animal") {
-				if (parsed.size() < 3) throw;
-				gameState.spawnObject(new Animal(
-					std::stoi(parsed[1]), std::stoi(parsed[2])
-				));
+				if (parsed.size() < 4) throw;
+                if (parsed.size() < 5) {
+                    // Size of 4: spawn a named animal
+                    gameState.spawnObject(new Animal(
+                        parsed[1], std::stoi(parsed[2]), std::stoi(parsed[3])
+                    ));
+                } else {
+                    // Size of 5 or more: spawn a specific animal
+                    gameState.spawnObject(new Animal(
+                        parsed[1], std::stoi(parsed[2]), std::stoi(parsed[3]), std::stoi(parsed[4])
+                    ));
+                }
 			}
         }
     } catch (std::exception& e) {
         // Failed: re-clear the world
+        std::cout << "ERR: Failed to re-clear the world (level: " << levelName << ")" << std::endl;
         gameState.clear();
         return;
     }
