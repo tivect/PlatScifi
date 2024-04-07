@@ -10,6 +10,7 @@ Renderer::Renderer(sf::RenderWindow& window, AssetHandler& assetHandler)
 
 void Renderer::renderFromData(RenderData data) {
     // TODO: implement other types (like images)
+    double worldScale = zoomFactor * screenPixPerWorld;
     if (data.type == RenderType::Rectangle) {
         // Rectangle
         sf::RectangleShape toRender;
@@ -21,8 +22,8 @@ void Renderer::renderFromData(RenderData data) {
             // Convert from world to screen coordinates
             // TODO: render from the center position?
             // TODO: do not render if out of screen range
-            toRender.setSize(sf::Vector2f(data.width * screenPixPerWorld, data.height * screenPixPerWorld));
-            toRender.setPosition(sf::Vector2f((data.locx - worldCameraCenterX) * screenPixPerWorld + window.getSize().x / 2.0, (data.locy - worldCameraCenterY) * screenPixPerWorld + window.getSize().y / 2.0));
+            toRender.setSize(sf::Vector2f(data.width * worldScale, data.height * worldScale));
+            toRender.setPosition(sf::Vector2f((data.locx - worldCameraCenterX) * worldScale + window.getSize().x / 2.0, (data.locy - worldCameraCenterY) * worldScale + window.getSize().y / 2.0));
         }
         toRender.setFillColor(sf::Color(data.color.r, data.color.g, data.color.b));
         window.draw(toRender);
@@ -36,8 +37,8 @@ void Renderer::renderFromData(RenderData data) {
         } else {
             // Convert from world to screen coordinates
             // TODO: render from the center position?
-            toRender.setRadius((data.width + data.height) / 4 * screenPixPerWorld);
-            toRender.setPosition(sf::Vector2f((data.locx - worldCameraCenterX) * screenPixPerWorld + window.getSize().x / 2.0, (data.locy - worldCameraCenterY) * screenPixPerWorld + window.getSize().y / 2.0));
+            toRender.setRadius((data.width + data.height) / 4 * worldScale);
+            toRender.setPosition(sf::Vector2f((data.locx - worldCameraCenterX) * worldScale + window.getSize().x / 2.0, (data.locy - worldCameraCenterY) * worldScale + window.getSize().y / 2.0));
         }
         toRender.setFillColor(sf::Color(data.color.r, data.color.g, data.color.b));
         window.draw(toRender);
@@ -61,8 +62,8 @@ void Renderer::renderFromData(RenderData data) {
             tex.create(img.getSize().x, img.getSize().y);
             tex.update(img);
             toRender.setTexture(tex);
-            toRender.setPosition(sf::Vector2f((data.locx - worldCameraCenterX) * screenPixPerWorld + window.getSize().x / 2.0, (data.locy - worldCameraCenterY) * screenPixPerWorld + window.getSize().y / 2.0));
-            toRender.setScale(data.width * screenPixPerWorld / img.getSize().x, data.height * screenPixPerWorld / img.getSize().y);
+            toRender.setPosition(sf::Vector2f((data.locx - worldCameraCenterX) * worldScale + window.getSize().x / 2.0, (data.locy - worldCameraCenterY) * worldScale + window.getSize().y / 2.0));
+            toRender.setScale(data.width * worldScale / img.getSize().x, data.height * worldScale / img.getSize().y);
         }
         window.draw(toRender);
     }
@@ -73,14 +74,16 @@ void Renderer::renderMessage(UIMessage& uiMessage, int locx, int locy) {
     text.setFont(assetHandler.getMainFont());
     text.setString(uiMessage.message);
     text.setCharacterSize(uiMessage.fontSize);
-    text.setFillColor(sf::Color(uiMessage.color.r, uiMessage.color.g, uiMessage.color.b));
+    double alpha = std::min(sqrt(uiMessage.durationFramesRemaining) / 12.0, 1.0);
+    text.setFillColor(sf::Color(uiMessage.color.r, uiMessage.color.g, uiMessage.color.b, alpha * 255));
     text.setPosition(locx, locy);
     window.draw(text);
 }
 
-void Renderer::setCamera(double newWorldCameraCenterX, double newWorldCameraCenterY, double percentEasing) {
+void Renderer::setCamera(double newWorldCameraCenterX, double newWorldCameraCenterY, double percentEasing, double zoomFactor) {
     worldCameraCenterX = worldCameraCenterX * percentEasing + newWorldCameraCenterX * (1 - percentEasing);
     worldCameraCenterY = worldCameraCenterY * percentEasing + newWorldCameraCenterY * (1 - percentEasing);
+    this->zoomFactor = this->zoomFactor * percentEasing + zoomFactor * (1 - percentEasing);
 }
 
 void Renderer::renderWorld(GameState& gameState) {

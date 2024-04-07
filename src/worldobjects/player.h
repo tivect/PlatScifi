@@ -6,8 +6,6 @@
 // The data for the player
 class Player : public WorldObject {
 private:
-    double velx = 0;
-    double vely = 0;
     bool onGround = false;
     int deathCounter = 0;
 
@@ -63,7 +61,7 @@ public:
         if (!LEVEL_DESIGN_MODE) {
             vely += worldState.getGravityStrength();
         }
-        velx *= 0.88;
+        velx *= 0.90; // Friction (0.88)
         vely *= 0.96;
         locx += velx;
         locy += vely;
@@ -82,7 +80,7 @@ public:
             if (object->hasAttribute(ObjectAttribute::Collision)) {
                 // X movement pushout
                 // todo: better way of doing the 0.1 thing (subtract velocity instead?)
-                if (locy + height - 0.1 >= object->getLocy() && locy + 0.1 < object->getLocy() + object->getHeight()) {
+                if (locy + height - 0.2 >= object->getLocy() && locy + 0.2 < object->getLocy() + object->getHeight()) {
                     // Within the y
                     if (locx + width > object->getLocx() && locx < object->getLocx() + object->getWidth()) {
                         // Side wall

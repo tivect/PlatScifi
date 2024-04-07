@@ -14,6 +14,7 @@ private:
     double worldCameraCenterX = 0;
     double worldCameraCenterY = 0;
     int screenPixPerWorld = 32;
+    double zoomFactor = 1.0;
 
 public:
     // Create the renderer
@@ -26,7 +27,7 @@ public:
     void renderMessage(UIMessage& message, int locx, int locy);
 
     // Set the camera
-    void setCamera(double newWorldCameraCenterX, double newWorldCameraCenterY, double percentEasing = 0.0);
+    void setCamera(double newWorldCameraCenterX, double newWorldCameraCenterY, double percentEasing = 0.0, double zoomFactor = 1.0);
 
     // Render the entire world
     void renderWorld(GameState& worldState);

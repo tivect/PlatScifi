@@ -19,8 +19,6 @@ struct AnimalData {
 // The data for an animal in the world
 class Animal : public WorldObject {
 private:
-    double velx = 0;
-    double vely = 0;
     bool onGround = false;
     long frameCount = 0;
     std::string texturePrefix;

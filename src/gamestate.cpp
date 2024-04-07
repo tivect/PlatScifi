@@ -63,7 +63,7 @@ void GameState::updateLevelNames(std::string newLevelName, std::string newNextLe
     nextLevelName = newNextLevelName;
     // Add the message
     // TODO: use level display names
-    addUIMessage("Teleported to " + newLevelName, { 255, 255, 255 });
+    addUIMessage("Teleported to " + newLevelName, { 0, 160, 0 });
 }
 
 void GameState::addUIMessage(std::string message, Color color, int fontSize, long durationFrames) {

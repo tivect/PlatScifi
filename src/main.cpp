@@ -109,7 +109,8 @@ int main() {
 	// Render
 	window.clear(sf::Color(0, 0, 0));
         // Game and world
-        renderer.setCamera(player->getLocx(), player->getLocy(), 0.8);
+        double cameraZoom = 1.0 - 0.1 * sqrt(pow(player->getVelx(), 2) + 0.3 * pow(player->getVely(), 2));
+        renderer.setCamera(player->getLocx(), player->getLocy(), 0.8, cameraZoom);
         renderer.renderWorld(gameState);
         // Update
         window.display();
