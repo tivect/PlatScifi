@@ -6,6 +6,8 @@ WorldObject::WorldObject() {
     locy = 0.0;
     width = 1.0;
     height = 1.0;
+    velx = 0.0;
+    vely = 0.0;
 }
 
 UpdateResult WorldObject::update(WorldState& worldState, std::vector<WorldObject*>& objects) {
@@ -31,6 +33,14 @@ double WorldObject::getWidth() {
 
 double WorldObject::getHeight() {
     return height;
+}
+
+double WorldObject::getVelx() {
+    return velx;
+}
+
+double WorldObject::getVely() {
+    return vely;
 }
 
 bool WorldObject::hasAttribute(ObjectAttribute attribute) {

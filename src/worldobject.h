@@ -31,6 +31,8 @@ protected:
     double locy;
     double width;
     double height;
+    double velx;
+    double vely;
     std::set<ObjectAttribute> objectAttributes;
 
 public:
@@ -47,6 +49,8 @@ public:
     double getLocy();
     double getWidth();
     double getHeight();
+    double getVelx();
+    double getVely();
 
     bool hasAttribute(ObjectAttribute attribute);
 

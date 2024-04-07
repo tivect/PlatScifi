@@ -109,7 +109,18 @@ public:
 						} else {
 							// Floor
 							locy -= vely;
-							vely = 0;
+                            if (object->getVely() < 0) {
+                                vely = object->getVely(); // Impart the others' velocity
+                                locy += vely;
+                            } else {
+                                vely = 0;
+                            }
+                            if (
+                                object->getVelx() > 0 && object->getVelx() > velx
+                                || object->getVelx() < 0 && object->getVelx() < velx
+                            ) {
+                                locx += object->getVelx();
+                            }
 							collided = true;
 							overlapped = true;
 							// todo: should not be on ground on a bottom corner

@@ -34,8 +34,12 @@ public:
     UpdateResult update(WorldState& worldState, std::vector<WorldObject*>& objects) {
         double alpha = sin(2 * 3.14159 * frameCount / periodFrames) * 0.5 + 0.5;
         // Interpolate between positions
-        this->locx = spawnx * (1.0 - alpha) + targetx * (alpha);
-        this->locy = spawny * (1.0 - alpha) + targety * (alpha);
+        double locxnew = spawnx * (1.0 - alpha) + targetx * (alpha);
+        double locynew = spawny * (1.0 - alpha) + targety * (alpha);
+        this->velx = locxnew - this->locx;
+        this->vely = locynew - this->locy;
+        this->locx = locxnew;
+        this->locy = locynew;
         frameCount++;
         return UpdateResult::None;
     }

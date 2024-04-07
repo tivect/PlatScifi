@@ -25,7 +25,6 @@ sf::Font& AssetHandler::getMainFont() {
 		std::cout << "ERR: Failed to load 'assets/LiberationSans-Regular.ttf'" << std::endl;
 		// TODO: handle
     }
-	std::cout << "Main font loaded" << std::endl;
     mainFontLoaded = true;
     return mainFont;
 }
