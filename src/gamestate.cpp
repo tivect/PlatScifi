@@ -20,13 +20,13 @@ UpdateResult GameState::update() {
             Animal* animal1 = new Animal(
                 "replicator", (*it)->getLocx(), (*it)->getLocy()
             );
-            animal1->teleport(animal1->getLocx() - 0.7, animal1->getLocy());
+            animal1->teleport(animal1->getLocx() - 1.5, animal1->getLocy()); // -0.7
             animal1->setDimensions((*it)->getWidth() * 0.8, (*it)->getHeight() * 0.8);
             newToSpawn.push_back(animal1);
             Animal* animal2 = new Animal(
                 "replicator", (*it)->getLocx(), (*it)->getLocy()
             );
-            animal2->teleport(animal2->getLocx() + 0.7, animal2->getLocy());
+            animal2->teleport(animal2->getLocx() + 1.5, animal2->getLocy());
             animal2->setDimensions((*it)->getWidth() * 0.8, (*it)->getHeight() * 0.8);
             animal2->reverseDirection();
             newToSpawn.push_back(animal2);

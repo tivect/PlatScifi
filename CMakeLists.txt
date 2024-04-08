@@ -59,6 +59,7 @@ set(ASSETS
 	essential.txt
 	tiv_logo.png
 	grass1.png
+    sand.png
 	yellowpad.png
 	spike.png
 	level_0.csv
@@ -72,6 +73,8 @@ set(ASSETS
     enemy_replicator_0.png
     enemy_replicator_1.png
     enemy_replicator_2.png
+    enemy_addax_0.png
+    enemy_addax_1.png
 )
 
 foreach(ASSET ${ASSETS})

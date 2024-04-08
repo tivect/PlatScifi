@@ -30,7 +30,7 @@ public:
             width,
             height,
             { 14, 92, 81 },
-            "assets/grass1.png"
+            "assets/grass1.png" // TODO: allow rendering sand
         };
     }
 };

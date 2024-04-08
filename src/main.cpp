@@ -46,6 +46,7 @@ int main() {
 
     // Main game loop
     while (window.isOpen()) {
+        // TODO: Frame acceleration thing (for consistent speed/timing)
         // Poll events
         for (auto event = sf::Event{}; window.pollEvent(event);) {
             if (event.type == sf::Event::Closed) {

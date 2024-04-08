@@ -42,8 +42,22 @@ const std::map<std::string, AnimalData> Animal::animalDefaults = {
             3.0,
             3.0,
             {
-                ObjectAttribute::OverlapDetect,
+                ObjectAttribute::Collision,
                 ObjectAttribute::Deadly
+            }
+        }
+    },
+    {
+        "addax",
+        {
+            "Addax",
+            "enemy_addax",
+            2.0,
+            0,
+            3.0,
+            3.0,
+            {
+                ObjectAttribute::Collision
             }
         }
     }

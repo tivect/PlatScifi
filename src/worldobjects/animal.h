@@ -135,6 +135,7 @@ public:
 	        bool overlapped = false;
             if (object->hasAttribute(ObjectAttribute::Collision)) {
                 // X movement pushout
+                // todo: improve time complexity (O(n^2) :skull:)
                 // todo: better way of doing the 0.1 thing (subtract velocity instead?)
                 if (locy + height - 0.1 >= object->getLocy() && locy + 0.1 < object->getLocy() + object->getHeight()) {
                     // Within the y
