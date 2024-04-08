@@ -25,7 +25,7 @@ void Renderer::renderFromData(RenderData data) {
             toRender.setSize(sf::Vector2f(data.width * worldScale, data.height * worldScale));
             toRender.setPosition(sf::Vector2f((data.locx - worldCameraCenterX) * worldScale + window.getSize().x / 2.0, (data.locy - worldCameraCenterY) * worldScale + window.getSize().y / 2.0));
         }
-        toRender.setFillColor(sf::Color(data.color.r, data.color.g, data.color.b));
+        toRender.setFillColor(sf::Color(data.color.r, data.color.g, data.color.b, data.alpha));
         window.draw(toRender);
     } else if (data.type == RenderType::Circle) {
         // Circle
@@ -37,6 +37,7 @@ void Renderer::renderFromData(RenderData data) {
         } else {
             // Convert from world to screen coordinates
             // TODO: render from the center position?
+            // TODO: do not render if off screen range
             toRender.setRadius((data.width + data.height) / 4 * worldScale);
             toRender.setPosition(sf::Vector2f((data.locx - worldCameraCenterX) * worldScale + window.getSize().x / 2.0, (data.locy - worldCameraCenterY) * worldScale + window.getSize().y / 2.0));
         }
@@ -59,6 +60,7 @@ void Renderer::renderFromData(RenderData data) {
         } else {
             // Convert from world to screen coordinates
             // TODO: render from the center position?
+            // TODO: do not render if off screen range
             tex.create(img.getSize().x, img.getSize().y);
             tex.update(img);
             toRender.setTexture(tex);
@@ -94,7 +96,24 @@ void Renderer::renderWorld(GameState& gameState) {
         renderFromData(object->getRenderData());
     }
 
-	// TODO: render on-screen debug messages (ex. "enemy_fipa spawned")
+    // Render debug info, if needed
+    /*for (int y = 0; y < 40; y++) {
+        for (int x = 0; x < 40; x++) {
+            int cellSat = gameState.getCollisionMatrix().getCellSaturation(x, y);
+            renderFromData({
+                RenderType::Rectangle,
+                CoordType::World,
+                (double) x * gameState.getCollisionMatrix().getCellSize(),
+                (double) y * gameState.getCollisionMatrix().getCellSize(),
+                (double) gameState.getCollisionMatrix().getCellSize(),
+                (double) gameState.getCollisionMatrix().getCellSize(),
+                { 255, 255, 0 },
+                "",
+                std::min(255, cellSat * 20)
+            });
+        }
+    }*/
+
     // Render UI messages
     int level = 0;
     for (int i = gameState.uiMessages.size() - 1; i >= 0; i--) {

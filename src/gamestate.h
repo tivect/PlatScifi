@@ -3,6 +3,7 @@
 #include <vector>
 #include "worldobject.h"
 #include "worldobjectincludes.h"
+#include "worldcollisionmatrix.h"
 #include "worldstate.h"
 #include "uimessage.h"
 
@@ -10,6 +11,7 @@
 class GameState {
 private:
     WorldState worldState;
+    WorldCollisionMatrix collisionMatrix;
     std::string levelName;
     std::string nextLevelName;
 
@@ -29,10 +31,12 @@ public:
     std::string getNextLevelName();
     // Get the current world state
     WorldState& getWorldState();
+    // Get the current collision matrix
+    WorldCollisionMatrix& getCollisionMatrix();
     // Update the current level name
     void updateLevelNames(std::string newLevelName, std::string newNextLevelName); 
     // Add a UI message
-    void addUIMessage(std::string message, Color color, int fontSize = 14, long durationFrames = 150);
+    void addUIMessage(std::string message, Color color, int fontSize = 14, long durationFrames = 150, bool debug = false);
     // Clear all objects from the world, aside from Persisting objects
     void clear();
     // Destructor to free memory

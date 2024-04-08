@@ -95,7 +95,8 @@ UpdateResult Animal::update(GameState& gameState) {
     onGround = false;
     // TODO: refactor
     // TODO: update all collisions from player
-    for (WorldObject* object : gameState.objects) {
+    std::set<WorldObject*> nearby = gameState.getCollisionMatrix().searchMatrix(this);
+    for (WorldObject* object : nearby) {
         if (object == this) continue;
         bool collided = false;
         bool overlapped = false;

@@ -13,7 +13,7 @@ private:
     AssetHandler& assetHandler;
     double worldCameraCenterX = 0;
     double worldCameraCenterY = 0;
-    int screenPixPerWorld = 32;
+    int screenPixPerWorld = 24; // 32, 24
     double zoomFactor = 1.0;
 
 public:

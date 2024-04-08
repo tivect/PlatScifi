@@ -32,4 +32,5 @@ struct RenderData {
     double height;
     Color color;
     std::string imageSource; // Source image from src
+    int alpha = 255;
 };
