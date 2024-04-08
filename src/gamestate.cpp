@@ -8,7 +8,7 @@ UpdateResult GameState::update() {
     // Update world objects
     std::vector<WorldObject*> newToSpawn;
     for (std::vector<WorldObject*>::iterator it = objects.begin(); it != objects.end();) {
-        UpdateResult updateResult = (*it)->update(worldState, objects);
+        UpdateResult updateResult = (*it)->update(*this);
         if (updateResult == UpdateResult::NextLevel) {
             // TODO: improve this
             return UpdateResult::NextLevel;
@@ -56,6 +56,10 @@ std::string GameState::getLevelName() {
 
 std::string GameState::getNextLevelName() {
     return nextLevelName;
+}
+
+WorldState& GameState::getWorldState() {
+    return worldState;
 }
 
 void GameState::updateLevelNames(std::string newLevelName, std::string newNextLevelName) {

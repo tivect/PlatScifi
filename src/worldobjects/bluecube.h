@@ -15,8 +15,8 @@ public:
         objectAttributes.insert(ObjectAttribute::Collision);
     }
     
-    // Override the update function
-    UpdateResult update(WorldState& worldState, std::vector<WorldObject*>& objects) {
+    // Override update: bounce around the screen
+    UpdateResult update(GameState& gameState) {
         locx += velx;
         if (locx > 64 || locx < 0) velx *= -1;
         locy += vely;

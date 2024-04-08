@@ -5,6 +5,9 @@
 #include "renderdata.h"
 #include "worldstate.h"
 
+// To fix the cyclical dependency error
+class GameState;
+
 // The result of an update function
 enum class UpdateResult {
     None,
@@ -40,7 +43,7 @@ public:
     WorldObject();
 
     // Update each frame
-    virtual UpdateResult update(WorldState& worldState, std::vector<WorldObject*>& objects);
+    virtual UpdateResult update(GameState& gameState);
 
     // Get whether a point is inside of this object
     double isPointInside(double x, double y);
@@ -51,6 +54,8 @@ public:
     double getHeight();
     double getVelx();
     double getVely();
+
+    void debugCyclical(GameState& gameState);
 
     bool hasAttribute(ObjectAttribute attribute);
 

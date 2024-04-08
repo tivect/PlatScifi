@@ -1,4 +1,5 @@
 #include "worldobject.h"
+#include "gamestate.h"
 
 WorldObject::WorldObject() {
     coordType = CoordType::World;
@@ -10,7 +11,7 @@ WorldObject::WorldObject() {
     vely = 0.0;
 }
 
-UpdateResult WorldObject::update(WorldState& worldState, std::vector<WorldObject*>& objects) {
+UpdateResult WorldObject::update(GameState& gameState) {
     // Update
     return UpdateResult::None;
 }
@@ -41,6 +42,11 @@ double WorldObject::getVelx() {
 
 double WorldObject::getVely() {
     return vely;
+}
+
+// TODO: remove this debug
+void WorldObject::debugCyclical(GameState& gameState) {
+    gameState.getLevelName();
 }
 
 bool WorldObject::hasAttribute(ObjectAttribute attribute) {

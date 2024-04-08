@@ -5,6 +5,7 @@
 #include "assethandler.h"
 #include "renderer.h"
 #include "renderdata.h"
+//class GameState;
 #include "gamestate.h"
 #include "worldspawner.h"
 #include "worldobject.h"

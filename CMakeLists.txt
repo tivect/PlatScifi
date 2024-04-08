@@ -24,8 +24,6 @@ add_executable(PlatScifi
     src/renderer.h
     src/worldstate.cpp
     src/worldstate.h
-    src/gamestate.cpp
-    src/gamestate.h
     src/worldspawner.cpp
     src/worldspawner.h
     src/worldobjectincludes.h
@@ -39,6 +37,9 @@ add_executable(PlatScifi
     src/worldobjects/leveltp.h
     src/worldobjects/spike.h
     src/worldobjects/animal.cpp
+    src/worldobjects/player.cpp
+    src/gamestate.cpp
+    src/gamestate.h
 )
 target_link_libraries(PlatScifi PRIVATE sfml-graphics)
 target_compile_features(PlatScifi PRIVATE cxx_std_17)

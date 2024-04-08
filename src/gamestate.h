@@ -27,6 +27,8 @@ public:
     std::string getLevelName();
     // Get the next level name
     std::string getNextLevelName();
+    // Get the current world state
+    WorldState& getWorldState();
     // Update the current level name
     void updateLevelNames(std::string newLevelName, std::string newNextLevelName); 
     // Add a UI message

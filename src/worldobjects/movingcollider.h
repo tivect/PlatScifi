@@ -30,8 +30,8 @@ public:
         objectAttributes.insert(ObjectAttribute::Collision);
     }
 
-    // Override update: gravity
-    UpdateResult update(WorldState& worldState, std::vector<WorldObject*>& objects) {
+    // Override update: interpolation
+    UpdateResult update(GameState& gameState) {
         double alpha = sin(2 * 3.14159 * frameCount / periodFrames) * 0.5 + 0.5;
         // Interpolate between positions
         double locxnew = spawnx * (1.0 - alpha) + targetx * (alpha);
