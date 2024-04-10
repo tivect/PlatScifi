@@ -1,0 +1,27 @@
+// Insane Level (level_4)
+nextLevelName, level_1
+// Bottom colliders
+StaticCollider, 3, 25, 6, 2
+//StaticCollider, 9, 27, 10, 2
+StaticCollider, 19, 25, 6, 2
+// Vertical colliders
+StaticCollider, 0, 0, 2, 25
+StaticCollider, 25, 0, 2, 19
+// Main large bottom block
+StaticCollider, 23, 29, 80, 19
+// Rightmost barrier
+StaticCollider, 103, 26, 2, 3
+// Ending teleporter
+LevelTp, 100, 28
+// Spike
+Spike, 28, 28
+// Static deadly section
+StaticDeadly, 33, 28, 5, 2
+// Moving Platforms
+MovingCollider, 8, 32, 5, 2, 300, 20, 32
+MovingCollider, 40, 24, 5, 2, 300, 40, 15
+MovingCollider, 47, 15, 5, 2, 300, 45, 15
+// Animals
+Animal, bird, 50, 15
+Animal, fipa, 55, 15
+Animal, replicator, 58, 15
