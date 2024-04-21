@@ -18,9 +18,9 @@ public:
 	    this->objectAttributes.insert(ObjectAttribute::LevelTeleport);
     }
 
-    // Override update: check with player
-    UpdateResult update(WorldState& worldState, std::vector<WorldObject*>& objects) {
-	// TODO: stuff
+    // Override update: check with player ?
+    UpdateResult update(GameState& gameState) {
+        // TODO: stuff
         return UpdateResult::None;
     }
 

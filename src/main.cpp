@@ -5,6 +5,7 @@
 #include "assethandler.h"
 #include "renderer.h"
 #include "renderdata.h"
+//class GameState;
 #include "gamestate.h"
 #include "worldspawner.h"
 #include "worldobject.h"
@@ -13,6 +14,7 @@
 // Entry point
 int main() {
     auto window = sf::RenderWindow{ { 1920u, 1080u }, "PlatScifi" };
+    // TODO: better framerate limit ?
     window.setFramerateLimit(144);
 
     // TODO: build not working on Linux?
@@ -45,6 +47,7 @@ int main() {
 
     // Main game loop
     while (window.isOpen()) {
+        // TODO: Frame acceleration thing (for consistent speed/timing)
         // Poll events
         for (auto event = sf::Event{}; window.pollEvent(event);) {
             if (event.type == sf::Event::Closed) {
@@ -58,6 +61,7 @@ int main() {
         }
 
         // Use input
+        bool resetPlayer = false;
         if (keysPressed.find(sf::Keyboard::A) != keysPressed.end()) {
             player->accelerate(-0.05, 0);
         }
@@ -75,31 +79,42 @@ int main() {
             player->accelerate(0, 0.05);
         }
         if (keysPressed.find(sf::Keyboard::R) != keysPressed.end()) {
-            // Restart to spawn location
-            player->teleport(5.0, 10.0);
+            // Restart to spawn location (counts as a death)
+            player->die();
+            resetPlayer = true;
+            keysPressed.erase(sf::Keyboard::R);
         }
         if (keysPressed.find(sf::Keyboard::P) != keysPressed.end()) {
             // Debug: spawn blue cubes
             gameState.spawnObject(new BlueCube(player->getLocx(), player->getLocy()));
             keysPressed.erase(sf::Keyboard::P);
+            gameState.addUIMessage("Player spawned a debug blue cube", { 0, 0, 255 });
         }
 
+        // Update the game and world
         if (LEVEL_DESIGN_MODE) {
             // Level Design Mode: keep reloading the world without updating it
             worldSpawner.spawnWorld(gameState, gameState.getLevelName());
         }
-        // Update the game and world
         UpdateResult updateResult = gameState.update();
+        if (resetPlayer) updateResult = UpdateResult::DieReset;
         if (updateResult == UpdateResult::NextLevel) {
             // Load the next level, if possible
             // TODO: impl better
             worldSpawner.spawnWorld(gameState, gameState.getNextLevelName());
+        } else if (updateResult == UpdateResult::DieReset) {
+            // Died: re-load the same level
+            worldSpawner.spawnWorld(gameState, gameState.getLevelName());
+            gameState.addUIMessage("Death #" + std::to_string(player->getDeathCounter()), { 255, 0, 0 });
         }
 
-        // Render the game and world
-        window.clear(sf::Color(111, 201, 252));
-        renderer.setCamera(player->getLocx(), player->getLocy(), 0.8);
-        renderer.renderWorldObjects(gameState);
+	// Render
+	window.clear(sf::Color(0, 0, 0));
+        // Game and world
+        double cameraZoom = 1.0 - 0.1 * sqrt(pow(player->getVelx(), 2) + 0.3 * pow(player->getVely(), 2));
+        renderer.setCamera(player->getLocx(), player->getLocy(), 0.8, cameraZoom);
+        renderer.renderWorld(gameState);
+        // Update
         window.display();
     }
 }

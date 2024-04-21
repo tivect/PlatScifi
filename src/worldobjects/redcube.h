@@ -12,7 +12,7 @@ public:
     }
 
     // Override update: move right over time
-    UpdateResult update(WorldState& worldState, std::vector<WorldObject*>& objects) {
+    UpdateResult update(GameState& gameState) {
         locx += 0.1;
         if (locx > 30) {
             locy += 1;

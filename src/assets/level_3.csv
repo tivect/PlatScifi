@@ -1,0 +1,10 @@
+// Enemies (level_3)
+nextLevelName, level_4
+// Uphill
+StaticCollider, 2, 16, 28, 4
+StaticCollider, 30, 12, 30, 8
+StaticCollider, 60, 8, 40, 8
+// Enemies
+Animal, fipa, 55, 6
+// Next level
+LevelTp, 80, 7

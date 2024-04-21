@@ -5,11 +5,16 @@
 #include "renderdata.h"
 #include "worldstate.h"
 
+// To fix the cyclical dependency error
+class GameState;
+
 // The result of an update function
 enum class UpdateResult {
     None,
     Destroy,
-    NextLevel // TODO: better naming
+    DieReset,
+    NextLevel, // TODO: better naming
+    ReplicateAndDestroy,
 };
 
 // The attributes that an object can have
@@ -29,6 +34,8 @@ protected:
     double locy;
     double width;
     double height;
+    double velx;
+    double vely;
     std::set<ObjectAttribute> objectAttributes;
 
 public:
@@ -36,7 +43,7 @@ public:
     WorldObject();
 
     // Update each frame
-    virtual UpdateResult update(WorldState& worldState, std::vector<WorldObject*>& objects);
+    virtual UpdateResult update(GameState& gameState);
 
     // Get whether a point is inside of this object
     double isPointInside(double x, double y);
@@ -45,6 +52,10 @@ public:
     double getLocy();
     double getWidth();
     double getHeight();
+    double getVelx();
+    double getVely();
+
+    void debugCyclical(GameState& gameState);
 
     bool hasAttribute(ObjectAttribute attribute);
 

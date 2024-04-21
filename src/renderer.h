@@ -13,7 +13,8 @@ private:
     AssetHandler& assetHandler;
     double worldCameraCenterX = 0;
     double worldCameraCenterY = 0;
-    int screenPixPerWorld = 32;
+    int screenPixPerWorld = 24; // 32, 24
+    double zoomFactor = 1.0;
 
 public:
     // Create the renderer
@@ -22,9 +23,12 @@ public:
     // Render from a RenderData object
     void renderFromData(RenderData data);
 
+    // Render a message
+    void renderMessage(UIMessage& message, int locx, int locy);
+
     // Set the camera
-    void setCamera(double newWorldCameraCenterX, double newWorldCameraCenterY, double percentEasing = 0.0);
+    void setCamera(double newWorldCameraCenterX, double newWorldCameraCenterY, double percentEasing = 0.0, double zoomFactor = 1.0);
 
     // Render the entire world
-    void renderWorldObjects(GameState& worldState);
+    void renderWorld(GameState& worldState);
 };

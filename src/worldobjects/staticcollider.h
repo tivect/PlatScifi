@@ -15,7 +15,7 @@ public:
     }
 
     // Override update: gravity
-    UpdateResult update(WorldState& worldState, std::vector<WorldObject*>& objects) {
+    UpdateResult update(GameState& gameState) {
         return UpdateResult::None;
     }
 
@@ -30,7 +30,7 @@ public:
             width,
             height,
             { 14, 92, 81 },
-            "assets/grass1.png"
+            "assets/grass1.png" // TODO: allow rendering sand
         };
     }
 };

@@ -24,8 +24,6 @@ add_executable(PlatScifi
     src/renderer.h
     src/worldstate.cpp
     src/worldstate.h
-    src/gamestate.cpp
-    src/gamestate.h
     src/worldspawner.cpp
     src/worldspawner.h
     src/worldobjectincludes.h
@@ -38,6 +36,10 @@ add_executable(PlatScifi
     src/worldobjects/staticdeadly.h
     src/worldobjects/leveltp.h
     src/worldobjects/spike.h
+    src/worldobjects/animal.cpp
+    src/worldobjects/player.cpp
+    src/gamestate.cpp
+    src/gamestate.h
 )
 target_link_libraries(PlatScifi PRIVATE sfml-graphics)
 target_compile_features(PlatScifi PRIVATE cxx_std_17)
@@ -55,22 +57,32 @@ install(TARGETS PlatScifi)
 # Copy over the assets folder
 # TODO: use a GLOB
 set(ASSETS
-    essential.txt
-    tiv_logo.png
-    grass1.png
-    yellowpad.png
-    spike.png
-    level_0.csv
-    level_1.csv
-    level_2.csv
-    level_design.csv
+	essential.txt
+	tiv_logo.png
+	grass1.png
+    sand.png
+	yellowpad.png
+	spike.png
+	level_0.csv
+	level_1.csv
+	level_2.csv
+	level_design.csv
+	LiberationSans-Regular.ttf
+	enemy_bird_0.png
+	enemy_bird_1.png
+    enemy_fipa_0.png
+    enemy_replicator_0.png
+    enemy_replicator_1.png
+    enemy_replicator_2.png
+    enemy_addax_0.png
+    enemy_addax_1.png
 )
 
 foreach(ASSET ${ASSETS})
     # This makes files, but corrupts image files
     # file(GENERATE OUTPUT "bin/Debug/assets/${ASSET}" INPUT "src/assets/${ASSET}")
     # file(GENERATE OUTPUT "bin/Release/assets/${ASSET}" INPUT "src/assets/${ASSET}")
-    # This copies the asset into the build assets folder:
-    file(COPY "src/assets/${ASSET}" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/bin/Debug/assets/")
-    file(COPY "src/assets/${ASSET}" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/bin/Release/assets/")
+    # This correctly copies the asset into the build assets folder:
+	file(COPY "src/assets/${ASSET}" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/bin/Debug/assets/")
+	file(COPY "src/assets/${ASSET}" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/bin/Release/assets/")
 endforeach()

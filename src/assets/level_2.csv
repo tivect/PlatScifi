@@ -1,7 +1,8 @@
-// Second level (level_2)
-// Cycle back to the start
-nextLevelName, level_1
-// Bottom collider
-StaticCollider, 2, 30, 30, 2
+// Platforms (level_2)
+nextLevelName, level_3
+// Grass has a hole in it
+StaticCollider, 2, 16, 40, 4
+MovingCollider, 42, 16, 8, 2, 300, 74, 16
+StaticCollider, 82, 16, 40, 4
 // Next level
-LevelTp, 50, 29
+LevelTp, 100, 15
