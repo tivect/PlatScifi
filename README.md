@@ -1,6 +1,8 @@
 # PlatScifi
 
-A platformer game by the tivect team
+A simple but challenging platformer game by the tivect team (with some silly graphics).
+
+The game isn't finished--but it will be one day.
 
 ## Building:
 

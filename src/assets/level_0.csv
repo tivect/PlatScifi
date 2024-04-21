@@ -14,4 +14,4 @@ Spike, 28, 28
 // Static deadly section
 StaticDeadly, 33, 28, 5, 2
 // Ending teleporter
-LevelTp, 55, 28
+Level, 55, 28
